@@ -1,3 +1,3 @@
 
-drrr-bot - bot on python for [h](https://drrr.com)
+drrr-bot - bot on python for [drrr.com](https://drrr.com)
 
