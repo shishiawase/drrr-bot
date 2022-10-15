@@ -1,8 +1,8 @@
 import os
+import json
 import httpx
 import logging
 import threading
-from configparser import ConfigParser
 
 client = httpx.Client(timeout=None)
 DRRRUrl = 'https://drrr.com'
@@ -23,6 +23,28 @@ def request(url, **params):
     if res.text.startswith('{'): text = res.json()
     return { 'status': res.status_code, 'headers': res.headers, 'text': text }
 
+def rJson(name: str):
+    if not os.path.isfile(f'./configs/{name}.json'):
+        return False
+
+    with open(f'./configs/{name}.json', 'r+') as f:
+        obj = json.load(f)
+        return obj
+
+
+def wJson(name: str, profile: dict):
+    if not os.path.exists('./configs'): os.mkdir('./configs')
+
+    obj = {
+        'name': profile['name'],
+        'icon': profile['icon'],
+        'cookie': profile['cookie'],
+        'device': profile['device']
+    }
+
+    with open(f'./configs/{name}.json', 'w') as f:
+        f.write(json.dumps(obj))
+
 
 class Bot:
 
@@ -34,9 +56,9 @@ class Bot:
     queue = []
     rooms = []
     users = []
+    lastTime = 0
     loopId = None
     queueON = False
-    lastTime = 0
     loc = 'lounge'
     userlist = {'whitelist': [], 'blacklist': []}
     rule = {'enable': False, 'type': '', 'mode': {'whitelist': 'kick', 'blacklist': 'kick'}}
@@ -124,36 +146,22 @@ class Bot:
         return request(url, headers=headers)
     
 
-    def save(self, name='config'):
-        profile = self.profile
-
-        config = ConfigParser()
-        config.add_section('Config')
-        config.set('Config', 'name', profile['name'])
-        config.set('Config', 'icon', profile['icon'])
-        config.set('Config', 'cookie', profile['cookie'])
-        config.set('Config', 'device', profile['device'])
-
-        if not os.path.exists('./config'): os.mkdir('./config')
-        with open(f'./config/{name}.ini', 'w') as config_file:
-            config.write(config_file)
-        
+    def save(self, name: str = 'config'):
+        wJson(name, self.profile)
         logging.info('Config saved')
     
 
-    def load(self, name='config'):
-        config = ConfigParser()
+    def load(self, name: str = 'config'):
+        obj = rJson(name)
 
-        if not os.path.isfile(f'./config/{name}.ini'):
-            return False
-        config.read(f'./config/{name}.ini')
+        if obj:
+            for i in obj:
+                self.profile[i] = obj[i]
+            logging.info('Config loaded')
+            self._update()
 
-        for i in config.options('Config'):
-            self.profile[i] = config.get('Config', i)
-        
-        self.getProfile()
-        logging.info('Config loaded')
-        return True
+            return True
+        return False
 
 
     def _talksFilter(self, talks, time):
@@ -285,9 +293,14 @@ class Bot:
                 return
 
             self.loc = 'room'
-            lastTime = room.get('update') or 0
+            lastTime = (room.get('talks') and room['talks'][-1].get('time')) or 0
 
             if self.lastTime < lastTime:
+                if not self.lastTime:
+                    self._setInfo(room)
+                    self.lastTime = lastTime
+                    return
+
                 self._setInfo(room)
                 lastTalks = self._talksFilter(room['talks'], self.lastTime)
                 self.lastTime = lastTime
@@ -341,7 +354,7 @@ class Bot:
                         trips = [users.pop(users.index(x)) for x in users if x.startswith('#')]
                         func = f[i]['func']
 
-                        if (cmd and o['msg'].startswith(cmd)) or not cmd:
+                        if (cmd and cmd in o['msg']) or not cmd:
                             if ((users and o['user'] in users) or (trips and o['trip'] in trips)) or (not users and not trips):
                                 return func(o)
 
