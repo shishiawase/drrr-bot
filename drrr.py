@@ -1,6 +1,6 @@
 import os
-import logging
 import httpx
+import logging
 import threading
 from configparser import ConfigParser
 
