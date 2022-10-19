@@ -9,7 +9,8 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 # INSTALLATION
 
 - Install dependencies
-
+    ```
     $ python -m pip install httpx
-
+    
+    ```
 - 
