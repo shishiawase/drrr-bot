@@ -49,6 +49,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
   <dt>save(name)</dt>
   <dd>Save current profile</dd>
 </dl>
+
   | Parametr | Description |
   |:--------:|:------------:|
   |   name   | _Optional._ Set the name to the saved configuration |
