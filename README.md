@@ -4,6 +4,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 - [INSTALLATION](#installation)
 - [FUNCTIONS AND PARAMETERS](#functions-and-parameters)
 - [EXAMPLES](#examples)
+- [OTHER](#other)
 
 
 # INSTALLATION
@@ -33,6 +34,8 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
     ```
 
 # FUNCTIONS AND PARAMETERS
-
+  ** * ** - mark of the required parameter
 - ### login
     Log in chat, equivalent to pressing the enter after entering the name on the site
+- ### save(*name)
+    
