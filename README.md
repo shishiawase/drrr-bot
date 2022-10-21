@@ -2,7 +2,7 @@
 drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 
 - [INSTALLATION](#installation)
-- [METODS AND OPTIONS](#method-and-options)
+- [METHODS AND OPTIONS](#methods-and-options)
 - [EXAMPLES](#examples)
 
 
@@ -32,5 +32,5 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
     drrr.startLoop() # Always called at the end for continuous data from the site
     ```
 
-# METODS AND OPTIONS(metods-and-options)
+# METHODS AND OPTIONS
 
