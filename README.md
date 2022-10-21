@@ -37,7 +37,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 ***
 
 # FUNCTIONS AND PARAMETERS
-`*` - mark of the required parameter
+`*` - mark of the optional parameter
 
 
 <dl>
@@ -46,7 +46,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 </dl>
 
 <dl>
-  <dt>save(name)</dt>
+  <dt>save(*name)</dt>
   <dd>Save current profile</dd>
 </dl>
 
