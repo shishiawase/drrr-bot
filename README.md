@@ -45,10 +45,10 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 `*` - mark of the optional parameter
 
 
-### login()
+### _login()_
 Log in chat, equivalent to pressing the enter after entering the name on the site
 
-### save(\**name*)
+### _save(*name)_
 Save current profile
 
   | Parametr | Description |
