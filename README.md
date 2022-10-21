@@ -36,11 +36,11 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 # FUNCTIONS AND PARAMETERS
 `*` - mark of the required parameter
 
-**login**
-  Log in chat, equivalent to pressing the enter after entering the name on the site
+***login***
+Log in chat, equivalent to pressing the enter after entering the name on the site
 
-**save(name)**
-  Save current profile
+***save(name)***
+Save current profile
   | Parametr | Description |
   |:--------:|:------------:|
   |   name   | _Optional._ Set the name to the saved configuration |
