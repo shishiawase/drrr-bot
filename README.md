@@ -39,13 +39,16 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 # FUNCTIONS AND PARAMETERS
 `*` - mark of the required parameter
 
+
 <dl>
-  <dt>login</dt>
+  <dt>login()</dt>
   <dd>Log in chat, equivalent to pressing the enter after entering the name on the site</dd>
 </dl>
 
-***save(name)***
-Save current profile
+<dl>
+  <dt>save(name)</dt>
+  <dd>Save current profile</dd>
+</dl>
   | Parametr | Description |
   |:--------:|:------------:|
   |   name   | _Optional._ Set the name to the saved configuration |
