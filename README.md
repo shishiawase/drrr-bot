@@ -21,10 +21,16 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
     drrr = Bot('name', 'icon', 'device')
     # Default options for this: name = ***, icon = setton, device = Bot
     # Default use - Bot() without options
+    
+    
+    # And an example of use:
+    
     drrr.login() # Login in chat
-    drrr.create() # Create room
-    # or 
     drrr.join('room id') # Join room
+    drrr.msg('Hello') # Send message to the general chat
     
     drrr.startLoop() # Always called at the end for continuous data from the site
     ```
+
+# METODS AND OPTIONS
+
