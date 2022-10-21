@@ -6,6 +6,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 - [EXAMPLES](#examples)
 - [OTHER](#other)
 
+***
 
 # INSTALLATION
 
@@ -32,11 +33,14 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
     
     drrr.startLoop() # Always called at the end for continuous data from the site
     ```
+    
+***
 
 # FUNCTIONS AND PARAMETERS
 `*` - mark of the required parameter
 
 ***login***
+
 Log in chat, equivalent to pressing the enter after entering the name on the site
 
 ***save(name)***
