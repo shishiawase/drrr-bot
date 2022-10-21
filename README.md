@@ -40,7 +40,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 `*` - mark of the required parameter
 
 <dl>
-  <dt>***login***</dt>
+  <dt>login</dt>
   <dd>Log in chat, equivalent to pressing the enter after entering the name on the site</dd>
 </dl>
 
