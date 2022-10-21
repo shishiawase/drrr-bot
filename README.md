@@ -4,7 +4,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 - [INSTALLATION](#installation)
 - [FUNCTIONS AND PARAMETERS](#functions-and-parameters)
     - [login](#login)
-    - [save](#save)
+    - [save](#savename)
     - [load](#load)
     - [startLoop](#startLoop)
     - [stopLoop](#stopLoop)
@@ -48,7 +48,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 ### login()
 Log in chat, equivalent to pressing the enter after entering the name on the site
 
-### save(*name)
+### save(\**name*)
 Save current profile
 
   | Parametr | Description |
