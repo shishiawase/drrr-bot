@@ -34,3 +34,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 
 # METHODS AND OPTIONS
 
+- ### login()
+    Logged in chat with your parameters specified here `drr = Bot ('John', 'eight', 'Phone')`
+
+- ### 
