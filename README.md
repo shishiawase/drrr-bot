@@ -2,7 +2,7 @@
 drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 
 - [INSTALLATION](#installation)
-- [METHODS AND OPTIONS](#methods-and-options)
+- [FUNCTIONS AND PARAMETERS](#functions-and-parameters)
 - [EXAMPLES](#examples)
 
 
@@ -18,11 +18,11 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
     ```python
     from drrr.py import Bot
     
-    drrr = Bot('name', 'icon', 'device')
-    # Default options for this: name = ***, icon = setton, device = Bot
-    # Default use - Bot() without options
-    
-    
+    drrr = Bot('name', 'icon', 'device') # We determine the main parameters of the bot.
+                                         # If you simply call Bot (), the default parameters
+                                         # will be set: ('***', 'setton', 'Bot')
+                                         # Existing icons and devices can be viewed in "other"
+                                         
     # And an example of use:
     
     drrr.login() # Login in chat
@@ -32,9 +32,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
     drrr.startLoop() # Always called at the end for continuous data from the site
     ```
 
-# METHODS AND OPTIONS
+# FUNCTIONS AND PARAMETERS
 
-- ### login()
-    Logged in chat with your parameters specified here `drr = Bot ('John', 'eight', 'Phone')`
-
-- ### 
+- ### login
+    Log in chat, equivalent to pressing the enter after entering the name on the site
