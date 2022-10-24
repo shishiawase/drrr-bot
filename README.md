@@ -44,7 +44,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 # FUNCTIONS AND PARAMETERS
 `*` - mark of the optional parameter
 
-`drrr.login()`
+- `drrr.login()`
     | Parameter | Type | Description |
     |:---------:|:----:|:-----------:|
     | - | - | _Required_. Login in chat, always called after creating a bot class instance |
