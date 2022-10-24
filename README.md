@@ -44,14 +44,20 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 # FUNCTIONS AND PARAMETERS
 `*` - mark of the optional parameter
 
+`drrr.login()`
+| Parameter | Type | Description |
+|:---------:|:----:|:-----------:|
+| - | - | _Required_. Login in chat, always called after creating a bot class instance |
 
-### _login()_
-Log in chat, equivalent to pressing the enter after entering the name on the site
+```python
 
-### _save(*name)_
-Save current profile
+drrr.login()                         # _Required_. Always called after creating a bot class 
+                                     # instance
+                                    
+drrr.save(*name)                     # Save current profile. Default name - 'config'
 
-  | Parametr | Description |
-  |:--------:|:------------:|
-  |   name   | _Optional._ Set the name to the saved configuration |
-    
+drrr.load(*name)                     # Load profile from the 'configs' folder in the root.
+                                     # Default name - 'config'
+
+drrr.startLoop(*seconds)
+```
