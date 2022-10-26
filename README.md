@@ -243,6 +243,85 @@ It may allow only certain users to enter the room or on the contrary prohibit it
 
 # EXAMPLES
 
+- Moderate
+  ```python
+  # simple commands for moderation
+  
+  admins = ['#firsttrip', '#sectrip']
+  
+  @drrr.event(['msg', 'dm'], '/kick', admins)
+  def kick(obj):
+      user = obj['msg'].replace('/kick ', '')
+      drrr.kick(user)
+  
+  @drrr.event(['msg', 'dm'], '/ban', admins)
+  def ban(obj):
+      user = obj['msg'].replace('/ban ', '')
+      drrr.ban(user)
+  
+  @drrr.event(['msg', 'dm'], '/host', admins)
+  def kick(obj):
+      drrr.host(obj['user'])
+  
+  @drrr.event(['msg', 'dm'], '/title', admins)
+  def title(obj):
+      m = obj['msg'].replace('/title ', '')
+      drrr.title(m)
+  
+  @drrr.event(['msg', 'dm'], '/desc', admins)
+  def desc(obj):
+      m = obj['msg'].replace('/desc ', '')
+      drrr.desc(m)
+  ```
+
+- Lucky game
+  ```python
+  import random
+  
+  # roulette for departure from the room
+  
+  def rand(n, u):
+      match n:
+          case "0":
+              drrr.kick(u)
+          case "1":
+              drrr.ban(u)
+          case "2":
+              drrr.report(u)
+          case "3":
+              drrr.msg(f'You are lucky! @{u}')
+  
+  @drrr.event(['msg'], '/luck')
+  def luck(obj):
+      rand(random.randint(0, 3), obj['user'])
+  ```
+
+- Lock room
+  ```python
+  # adds everyone to the whitelist and does not let anyone new into the room
+  
+  @drrr.event(['msg'], '/lock', ['yourName', '#trip'])
+  def lock(obj):
+      drrr.whitelist(addAll=True, on=True)
+      drrr.msg('Whitelist enabled')
+  
+  @drrr.event(['msg'], '/unlock', ['yourName', '#trip'])
+  def unlock(obj):
+      drrr.whitelist(removeAll=True, on=False)
+      drrr.msg('Whitelist disabled')
+  ```
+
+- Random pics
+  ```python
+  import httpx
+  
+  # send random image
+  
+  @drrr.event(['msg'], '/waifu')
+  def waifu(obj):
+      r = httpx.get('https://api.waifu.pics/sfw/waifu').json()
+      drrr.msg('♥', r['url'])
+  ```
 ---
 
 # OTHER
