@@ -148,22 +148,22 @@ drrr.leave()                            # Leave the room
 Work with chat events, Thanks to this decorator, the function below it will pay attention only to the events that were given, ignoring the rest.
 
 - All types in events:
-`["msg", "dm", "me", "join", "leave", "new-host","new-description", "room-profile", "music", "kick", "ban"]`
-```python
-@drrr.event(types, *command, *users)    # @Decorator. 
-def someFunc(obj):                      # 'obj' in your function ALWAYS REQUIRED
-    pass                  
-                                        # types (List):
-                                        #  ⤷ What events will the function respond to. A complete
-                                        #  ⤷ list of events can be found in EVENTS
-                                        # command (String):
-                                        #  ⤷ A specific text command in chat for execution
-                                        # users (List):
-                                        #  ⤷ Users on which the event will respond
-                                        # obj (dict):
-                                        #  ⤷ Stores user information: type, name, msg, url, trip
+  `["msg", "dm", "me", "join", "leave", "new-host","new-description", "room-profile", "music", "kick", "ban"]`
+  ```python
+  @drrr.event(types, *command, *users)    # @Decorator. 
+  def someFunc(obj):                      # 'obj' in your function ALWAYS REQUIRED
+      pass                  
+                                          # types (List):
+                                          #  ⤷ What events will the function respond to. A complete
+                                          #  ⤷ list of events can be found in EVENTS
+                                          # command (String):
+                                          #  ⤷ A specific text command in chat for execution
+                                          # users (List):
+                                          #  ⤷ Users on which the event will respond
+                                          # obj (dict):
+                                          #  ⤷ Stores user information: type, name, msg, url, trip
                                         
-```
+  ```
 
 Setting a greeting at the entrance, example:
 ```python
