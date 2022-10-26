@@ -147,8 +147,7 @@ drrr.leave()                            # Leave the room
 
 Work with chat events, Thanks to this decorator, the function below it will pay attention only to the events that were given, ignoring the rest.
 
-All types in events:
-
+- All types in events:
 `["msg", "dm", "me", "join", "leave", "new-host","new-description", "room-profile", "music", "kick", "ban"]`
 
 ```python
@@ -181,24 +180,24 @@ More [examples](#examples)
 
 ## timer and later
 
-    Method for calling functions through a fixed time
+Method for calling functions through a fixed time
 
-    ```python
-    @drrr.timer(*seconds, *minutes, *hours) # @Decorator. Repeatedly calls a function with a fixed time delay 
-    def hello():                            # between each call
-        drrr.msg('Hi everyone')                            
+```python
+@drrr.timer(*seconds, *minutes, *hours) # @Decorator. Repeatedly calls a function with a fixed time delay 
+def hello():                            # between each call
+    drrr.msg('Hi everyone')                            
 
 
-    @drrr.later(*seconds, *minutes, *hours) # @Decorator. Сall the function once after a fixed time
-    def hello():                            
-        drrr.msg('Hi everyone')
+@drrr.later(*seconds, *minutes, *hours) # @Decorator. Сall the function once after a fixed time
+def hello():                            
+    drrr.msg('Hi everyone')
     
-    # You can set the interval both in seconds and in minutes, hours
-    # or all at once together
+# You can set the interval both in seconds and in minutes, hours
+# or all at once together
 
-    # To stop a certain timer, just do it:
-    drrr.loops['hello'].stop() # where is 'hello' the name of the function that you launched in the timer
-    ```
+# To stop a certain timer, just do it:
+drrr.loops['hello'].stop() # where is 'hello' the name of the function that you launched in the timer
+```
 ## whitelist and Blacklist
 
 ---
