@@ -166,17 +166,17 @@ Work with chat events, Thanks to this decorator, the function below it will pay 
                                         
   ```
 
-Setting a greeting at the entrance, example:
-```python
-@drrr.event(['join'])
-def greetings(obj):
-    drrr.msg(f'Hello @{obj['user']})
+- Setting a greeting at the entrance, example:
+  ```python
+  @drrr.event(['join'])
+  def greetings(obj):
+      drrr.msg(f'Hello @{obj['user']})
 
-# Output:
-  # Steave joined.
-  # Bot: Hello @Steave
-```
-More [examples](#examples)
+  # Output:
+    # Steave joined.
+    # Bot: Hello @Steave
+  ```
+  More [examples](#examples)
 
 ## timer and later
 
