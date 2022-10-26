@@ -4,10 +4,12 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 - [INSTALLATION](#installation)
 - [METHODS AND PARAMETERS](#methods-and-parameters)
     - [Events](#events)
-    - [Timers](#timers)
-    - [Whitelist and blacklist](#whitelist-and-blacklist)
+    - [timer and later](#timers)
+    - [whitelist and blacklist](#whitelist-and-blacklist)
 - [EXAMPLES](#examples)
 - [OTHER](#other)
+
+`*` - _marked optional parameters_
 
 ***
 
@@ -41,7 +43,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 
 # METHODS AND PARAMETERS
 
-`*` - marked optional parameters
+`*` - _marked optional parameters_
 
 ```python
 
@@ -56,21 +58,7 @@ drrr.startLoop(*seconds)                # Always called at the end for continuou
                                         #  ⤷ set a frequency for the date update in seconds.
                                         #  ⤷ Default - '1.5'
 
---------------------Other_methods-------------------
-                                    
-drrr.save(*name)                        # Save current profile.
-                                     
-                                        # name (String):
-                                        #  ⤷ Set a name for the saved config. Default - 'config'
-                                     
-drrr.load(*name)                        # Load profile.
-
-                                        # name (String):
-                                        #  ⤷ Set a name for the loaded config. Default - 'config'
-
-drrr.stopLoop()                         # Loop stop
-
---------------------Other_methods-------------------
+-----------------------Events-----------------------
 
 @drrr.event(['join'], *command, *users) # @Decorator. Work with chat events, for example print 
 def someFunc(obj):                      # the name in the console of the user who joined
@@ -85,6 +73,20 @@ def someFunc(obj):                      # the name in the console of the user wh
                                         #  ⤷ Users on which the event will respond
                                         # obj (dict):
                                         #  ⤷ Stores user information: type, name, msg, url, trip
+
+--------------------Other_methods-------------------
+                                    
+drrr.save(*name)                        # Save current profile.
+                                     
+                                        # name (String):
+                                        #  ⤷ Set a name for the saved config. Default - 'config'
+                                     
+drrr.load(*name)                        # Load profile.
+
+                                        # name (String):
+                                        #  ⤷ Set a name for the loaded config. Default - 'config'
+
+drrr.stopLoop()                         # Loop stop
 
 drrr.lounge()                           # Update lounge informations
 drrr.profile                            # Information about the current profile
@@ -156,9 +158,34 @@ drrr.report(name)                       # Ban and report user       | (String)
 drrr.unban(name)                        # Unban user
 
 drrr.leave()                            # Leave the room
+```
+## Events
 
---------------------------Timers-------------------------
+Work with chat events, Thanks to this decorator, the function below it will pay attention only to the events that were given, ignoring the rest.
+All events:
+`["msg", "dm", "me", "join", "leave", "new-host","new-description", "room-profile", "music", "kick", "ban"]`
 
+```python
+@drrr.event(['join'], *command, *users) # @Decorator. Work with chat events, for example print 
+def someFunc(obj):                      # the name in the console of the user who joined
+    print(obj['name'])                  # the room. 'obj' in your function ALWAYS REQUIRED
+    
+                                        # types (List):
+                                        #  ⤷ What events will the function respond to. A complete
+                                        #  ⤷ list of events can be found in EVENTS
+                                        # command (String):
+                                        #  ⤷ A specific text command in chat for execution
+                                        # users (List):
+                                        #  ⤷ Users on which the event will respond
+                                        # obj (dict):
+                                        #  ⤷ Stores user information: type, name, msg, url, trip
+```
+
+## timer and later
+
+Method for calling functions through a fixed time
+
+```python
 @drrr.timer(*seconds, *minutes, *hours) # @Decorator. Repeatedly calls a function with a fixed time delay 
 def hello():                            # between each call
     drrr.msg('Hi everyone')                            
@@ -174,11 +201,7 @@ def hello():
 # To stop a certain timer, just do it:
 drrr.loops['hello'].stop() # where is 'hello' the name of the function that you launched in the timer
 ```
-## Events
-
-## Timers
-
-## Whitelist and Blacklist
+## whitelist and Blacklist
 
 ---
 
