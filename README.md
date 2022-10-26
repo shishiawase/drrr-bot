@@ -242,8 +242,8 @@ It may allow only certain users to enter the room or on the contrary prohibit it
 
 - __Icons__:
   
-  <table>
-    
+  <table styled="border: none">
+    <tr>
       <td>
         <img src="/assets/setton.svg" width="48" height="48" align="center">
         <p align="center">setton</p> 
@@ -264,7 +264,7 @@ It may allow only certain users to enter the room or on the contrary prohibit it
         <img src="/assets/gaki-2x.svg" width="48" height="48" align="center">
         <p align="center">gaki-2x</p> 
       </td>
-    
+    <tr>
   </table>
   
   
