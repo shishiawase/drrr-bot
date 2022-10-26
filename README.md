@@ -242,34 +242,13 @@ It may allow only certain users to enter the room or on the contrary prohibit it
 
 - __Icons__:
   
-  #flex-container {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: row;
-    flex-direction: row;
-  }
-  
-  <div id="flex-container">
-    <p><img src="/assets/setton.svg" width="48" height="48" align="bottom">  <b>setton</b></p>
-    <p><img src="/assets/bakyura-2x.svg" width="48" height="48" align="bottom">  <b>bakyura-2x</b></p>
-    <p><img src="/assets/bakyura.svg" width="48" height="48" align="bottom">  <b>bakyura</b></p>
-    <p><img src="/assets/eight.svg" width="48" height="48" align="center">  <b>eight</b></p>
-    <p><img src="/assets/gaki-2x.svg" width="48" height="48" align="center">  <b>gaki-2x</b></p>
-    <p><img src="/assets/gg.svg" width="48" height="48" align="center">  <b>gg</b></p>
-    <p><img src="/assets/junsui-2x.svg" width="48" height="48" align="center">  <b>junsui-2x</b></p>
-    <p><img src="/assets/kakka.svg" width="48" height="48" align="center">  <b>kakka</b></p>
-    <p><img src="/assets/kanra-2x.svg" width="48" height="48" align="center">  <b>kanra-2x</b></p>
-    <p><img src="/assets/kanra.svg" width="48" height="48" align="center">  <b>kanra</b></p>
-    <p><img src="/assets/kuromu-2x.svg" width="48" height="48" align="center">  <b>kuromu-2x</b></p>
-    <p><img src="/assets/kyo-2x.svg" width="48" height="48" align="center">  <b>kyo-2x</b></p>
-    <p><img src="/assets/rotchi-2x.svg" width="48" height="48" align="center">  <b>rotchi-2x</b></p>
-    <p><img src="/assets/saki-2x.svg" width="48" height="48" align="center">  <b>saki-2x</b></p>
-    <p><img src="/assets/san-2x.svg" width="48" height="48" align="center">  <b>san-2x</b></p>
-    <p><img src="/assets/setton-2x.svg" width="48" height="48" align="center">  <b>setton-2x</b></p>
-    <p><img src="/assets/sharo-2x.svg" width="48" height="48" align="center">  <b>sharo-2x</b></p>
-    <p><img src="/assets/tanaka-2x.svg" width="48" height="48" align="center">  <b>tanaka-2x</b></p>
-    <p><img src="/assets/tanaka.svg" width="48" height="48" align="center">  <b>tanaka</b></p>
-    <p><img src="/assets/zaika-2x.svg" width="48" height="48" align="center">  <b>zaika-2x</b></p>
-    <p><img src="/assets/zaika.svg" width="48" height="48" align="center">  <b>zaika</b></p>
-    <p><img src="/assets/zawa.svg" width="48" height="48" align="center">  <b>zawa</b></p>
-  </div>
+  <table>
+    <tr>
+      <td>
+        <div>
+          <img src="/assets/setton.svg" width="48" height="48" align="center">
+            <p align="center">setton</p> 
+        </div>
+      </td>
+    </tr>
+  </table>
