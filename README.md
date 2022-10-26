@@ -242,14 +242,14 @@ It may allow only certain users to enter the room or on the contrary prohibit it
 
 - __Icons__:
   
-  <div id="badges">
-    <p><img src="/assets/setton.svg" width="48" height="48" align="center">  <b>setton</b></p>
-    <p><img src="/assets/bakyura-2x.svg" width="48" height="48" align="center">  <b>bakyura-2x</b></p>
-    <p><img src="/assets/bakyura.svg" width="48" height="48" align="center">  <b>bakyura</b></p>
+  <div id="badges" align="center">
+    <p><img src="/assets/setton.svg" width="48" height="48" align="bottom">  <b>setton</b></p>
+    <p><img src="/assets/bakyura-2x.svg" width="48" height="48" align="bottom">  <b>bakyura-2x</b></p>
+    <p><img src="/assets/bakyura.svg" width="48" height="48" align="bottom">  <b>bakyura</b></p>
     <p><img src="/assets/eight.svg" width="48" height="48" align="center">  <b>eight</b></p>
     <p><img src="/assets/gaki-2x.svg" width="48" height="48" align="center">  <b>gaki-2x</b></p>
     <p><img src="/assets/gg.svg" width="48" height="48" align="center">  <b>gg</b></p>
-    <p><img src="/assets/junsui.svg" width="48" height="48" align="center">  <b>junsui-2x</b></p>
+    <p><img src="/assets/junsui-2x.svg" width="48" height="48" align="center">  <b>junsui-2x</b></p>
     <p><img src="/assets/kakka.svg" width="48" height="48" align="center">  <b>kakka</b></p>
     <p><img src="/assets/kanra-2x.svg" width="48" height="48" align="center">  <b>kanra-2x</b></p>
     <p><img src="/assets/kanra.svg" width="48" height="48" align="center">  <b>kanra</b></p>
@@ -257,7 +257,7 @@ It may allow only certain users to enter the room or on the contrary prohibit it
     <p><img src="/assets/kyo-2x.svg" width="48" height="48" align="center">  <b>kyo-2x</b></p>
     <p><img src="/assets/rotchi-2x.svg" width="48" height="48" align="center">  <b>rotchi-2x</b></p>
     <p><img src="/assets/saki-2x.svg" width="48" height="48" align="center">  <b>saki-2x</b></p>
-    <p><img src="/assets/san.svg" width="48" height="48" align="center">  <b>san</b></p>
+    <p><img src="/assets/san-2x.svg" width="48" height="48" align="center">  <b>san-2x</b></p>
     <p><img src="/assets/setton-2x.svg" width="48" height="48" align="center">  <b>setton-2x</b></p>
     <p><img src="/assets/sharo-2x.svg" width="48" height="48" align="center">  <b>sharo-2x</b></p>
     <p><img src="/assets/tanaka-2x.svg" width="48" height="48" align="center">  <b>tanaka-2x</b></p>
