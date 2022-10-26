@@ -242,7 +242,7 @@ It may allow only certain users to enter the room or on the contrary prohibit it
 
 - __Icons__:
   
-  <table>
+  <table align="center">
     <tr>
       <td style="border-style: none;">
         <img src="/assets/setton.svg" width="48" height="48" align="center">
