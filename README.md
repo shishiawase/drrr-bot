@@ -245,11 +245,12 @@ It may allow only certain users to enter the room or on the contrary prohibit it
   <table>
     <tr>
       <td align="center">
-          <img src="/assets/setton.svg" width="48" height="48" align="center"> <p align="bottom">setton </p> </img>
+          <img src="/assets/setton.svg" width="48" height="48" align="center">
+          <p>setton</p>
       </td>
       <td td align="center">
         <img src="/assets/bakyura-2x.svg" width="48" height="48">
-        <p>bakyura-2x</p>
+        <p align="center">bakyura-2x</p>
       </td>
       <td td align="center">
         <img src="/assets/bakyura.svg" width="48" height="48">
