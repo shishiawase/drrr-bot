@@ -63,9 +63,9 @@ class Bot:
     userlist = {'whitelist': [], 'blacklist': []}
     rule = {'enable': False, 'type': '', 'mode': {'whitelist': 'kick', 'blacklist': 'kick'}}
 
-    def __init__(self, name: str = '***', icon: str = 'setton', lang: str = 'en-US', device: str = 'Bot'):
+    def __init__(self, name: str = '***', icon: str = 'setton', device: str = 'Bot', lang: str = 'en-US'):
 
-        self.profile['name'] = name
+        self.profile['name'] = name[:20]
         self.profile['icon'] = icon
         self.profile['lang'] = lang
         self.profile['device'] = device
@@ -480,7 +480,10 @@ class Bot:
         adult: bool = False,
         hidden: bool = False,
     ):
-
+        
+        name = name[:20]
+        desc = desc[:140]
+        
         form = {
             'name': name,
             'description': desc,
@@ -518,6 +521,7 @@ class Bot:
     
 
     def desc(self, desc: str):
+        desc = desc[:140]
         r = self.__cmd({ 'room_description': desc })
         return r
     
