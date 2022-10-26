@@ -240,8 +240,8 @@ It may allow only certain users to enter the room or on the contrary prohibit it
 
 # OTHER
 
-- Icons:
+- __Icons__:
   
   <div id="badges">
-    <p><img src="/assets/setton.svg" width="48" height="48" align="center">   <b>setton</b></p>
+    <p><img src="/assets/setton.svg" width="48" height="48" align="center">  <b>setton</b></p>
   </div>
