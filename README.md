@@ -241,4 +241,5 @@ It may allow only certain users to enter the room or on the contrary prohibit it
 # OTHER
 
 - Icons:
+
   <img src="/assets/setton.svg" width="48" height="48">
