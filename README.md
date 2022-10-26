@@ -70,13 +70,23 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 
 ```python
 
-drrr.login()                         # _Required_. Always called after creating a bot class 
-                                     # instance
-                                    
-drrr.save(*name)                     # Save current profile. Default name - 'config'
+# -------------Required functions in code-------------
 
-drrr.load(*name)                     # Load profile from the 'configs' folder in the root.
-                                     # Default name - 'config'
+drrr.login()                         # Always called after creating a bot class 
+                                     # instance
+                                  
+drrr.startLoop(*seconds)             # Always called at the end for continuous data from the site
+                                       # [seconds]: set a frequency for the date update in seconds.
+                                       # Default - '1.5'
+
+# -----------------All other functions----------------
+                                    
+drrr.save(*name)                     # Save current profile.
+                                       # name (String): 
+                                         # Set a name for the saved config. Default - 'config'
+drrr.load(*name)                     # Load profile.
+                                     # name (String):
+                                     #  ⤷ Set a name for the loaded config. Default - 'config'
 
 drrr.startLoop(*seconds)
 ```
