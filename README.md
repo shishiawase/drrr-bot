@@ -45,7 +45,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 
 ```python
 
---------------Required methods in code--------------
+--------------Required_methods_in_code--------------
 
 drrr.login()                            # Always called after creating a bot class 
                                         # instance
@@ -56,7 +56,7 @@ drrr.startLoop(*seconds)                # Always called at the end for continuou
                                         #  ⤷ set a frequency for the date update in seconds.
                                         #  ⤷ Default - '1.5'
 
---------------------Other methods-------------------
+--------------------Other_methods-------------------
                                     
 drrr.save(*name)                        # Save current profile.
                                      
