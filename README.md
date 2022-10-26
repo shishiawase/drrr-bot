@@ -311,6 +311,16 @@ It may allow only certain users to enter the room or on the contrary prohibit it
         <p align="center">san-2x</p> 
       </td>
     <tr>
+    <tr align="center">
+      <td align="center">
+        <img src="/assets/kuromu-2x.svg" width="48" height="48" align="center">
+        <p align="center">kuromu-2x</p> 
+      </td>
+      <td align="center">
+        <img src="/assets/kyo-2x.svg" width="48" height="48" align="center">
+        <p align="center">kyo-2x</p> 
+      </td>
+    </tr>
   </table>
   
   
