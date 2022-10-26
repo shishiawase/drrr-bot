@@ -328,7 +328,7 @@ It may allow only certain users to enter the room or on the contrary prohibit it
 
 - __Devices__:
   - Pc
-  - Phone,
+  - Phone
   - Tablet
   - Tv
   - Bot
