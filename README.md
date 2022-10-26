@@ -149,6 +149,7 @@ Work with chat events, Thanks to this decorator, the function below it will pay 
 
 - All types in events:
   `["msg", "dm", "me", "join", "leave", "new-host","new-description", "room-profile", "music", "kick", "ban"]`
+  
   ```python
   @drrr.event(types, *command, *users)    # @Decorator. 
   def someFunc(obj):                      # 'obj' in your function ALWAYS REQUIRED
