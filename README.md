@@ -247,7 +247,7 @@ It may allow only certain users to enter the room or on the contrary prohibit it
       <td style="border-style:dotted;">
         <div align="center">
           <img src="/assets/setton.svg" width="48" height="48">
-          <p align="bottom">setton</p>
+          <p>setton</p>
         </div>
       </td>
       <td style="border-style: none;">
