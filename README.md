@@ -243,5 +243,5 @@ It may allow only certain users to enter the room or on the contrary prohibit it
 - Icons:
   
   <div id="badges">
-    <p><img src="/assets/setton.svg" width="48" height="48" align="centre"> - setton</p>
+    <p><img src="/assets/setton.svg" width="48" height="48" align="center"> - setton</p>
   </div>
