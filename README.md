@@ -69,7 +69,7 @@ drrr.load(*name)                        # Load profile.
                                         #  ⤷ Set a name for the loaded config. Default - 'config'
 
 drrr.stopLoop()                         # Loop stop
--
+####
 @drrr.event(['join'], *command, *users) # @Decorator. Work with chat events, for example print 
 def someFunc(obj):                      # the name in the console of the user who joined
     print(obj['name'])                  # the room. 'obj' in your function ALWAYS REQUIRED
