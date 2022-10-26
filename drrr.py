@@ -473,7 +473,7 @@ class Bot:
 
     def create(self,
         name: str = 'Just',
-        description: str = '',
+        desc: str = '',
         limit: int = 5,
         lang: str = 'en-US',
         music: bool = False,
@@ -483,7 +483,7 @@ class Bot:
 
         form = {
             'name': name,
-            'description': description,
+            'description': desc,
             'limit': limit,
             'language': lang,
             'music': music,
