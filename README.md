@@ -14,13 +14,15 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 
 # INSTALLATION
 
+Download the module and an example for it - [releases](#releases)
+
 - ## Install dependencies:
     ```
     $ pip install httpx
     ```
     
 - ## Use this module:
-    We import the module into our main.py (or some other name) in further examples, this part will be skipped
+    Import the module into our `main.py` (or some other name) in further examples, this part will be skipped
     ```python
     from drrr import Bot
     
@@ -37,6 +39,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
     
     drrr.startLoop() # Always called at the end for continuous data from the site
     ```
+    Or use the example in the folder with the module `main.py` and edit it as you wish
     
 ***
 
