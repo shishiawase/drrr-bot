@@ -43,8 +43,6 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 
 # METHODS AND PARAMETERS
 
-`*` - _marked optional parameters_
-
 ```python
 
 --------------Required_methods_in_code--------------
@@ -162,7 +160,7 @@ Work with chat events, Thanks to this decorator, the function below it will pay 
                                           # users (List):
                                           #  ⤷ Users on which the event will respond
                                           # obj (dict):
-                                          #  ⤷ Stores user information: type, name, msg, url, trip
+                                          #  ⤷ Stores user information: type, user, msg, url, trip
                                         
   ```
 
@@ -210,6 +208,27 @@ Method for calling functions through a fixed time
   
 ## whitelist and Blacklist
 
+It may allow only certain users to enter the room or on the contrary prohibit it
+- Used:
+  ```python
+  drrr.blacklist(*add, *remove, *removeAll, *on, *mode)
+  drrr.whitelist(*add, *addAll, *remove, *removeAll, *on, *mode)
+  
+  # add (List): adds users to the whitelist, you can also add a trip '#tripcode'
+  # addAll (bool): adds all users current room in whitelist
+  # remove (List): deleted user from whitelist
+  # removeAll (bool): deleted all from whitelist
+  # on (bool): enable whitelist set - true, disable - false
+  # mode (String): set mode - 'kick', 'ban', 'report'. Default - 'kick'
+  ```
+- Example:
+  ```python
+  drrr.whitelist(['Kate'], on=true)
+  # now only the Kate can enter the room, the rest of the users will be kicked
+  
+  drrr.blacklist(['John'], on=true)
+  # now all can enter the room, only the John will kicked from the room 
+  ```
 ---
 
 # EXAMPLES
