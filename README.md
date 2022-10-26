@@ -250,7 +250,7 @@ It may allow only certain users to enter the room or on the contrary prohibit it
       </td>
       <td td align="center">
         <img src="/assets/bakyura-2x.svg" width="48" height="48" align="center">
-        <p align="center">bakyura-2x</p>
+        <p text-align="center">bakyura-2x</p>
       </td>
       <td td align="center">
         <img src="/assets/bakyura.svg" width="48" height="48" align="bottom">
