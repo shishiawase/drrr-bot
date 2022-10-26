@@ -224,10 +224,13 @@ It may allow only certain users to enter the room or on the contrary prohibit it
 - Example:
   ```python
   drrr.whitelist(['Kate'], on=true)
-  # now only the Kate can enter the room, the rest of the users will be kicked
+  # Now only the Kate can enter the room, the rest of the users will be kicked
   
   drrr.blacklist(['John'], on=true)
-  # now all can enter the room, only the John will kicked from the room 
+  # Now all can enter the room, only the John will kicked from the room
+  
+  # When one of the methods is turned on, for example a blacklist, the whitelist
+  # is automatically disabled
   ```
 ---
 
