@@ -244,11 +244,9 @@ It may allow only certain users to enter the room or on the contrary prohibit it
   
   <table style="border-style:dotted;">
     <tr style="border-style:dotted;">
-      <td style="border-style:dotted;">
-        <div align="bottom">
-          <img src="/assets/setton.svg" width="48" height="48">
-          <p>setton</p>
-        </div>
+      <td valign="top">
+        <img src="/assets/setton.svg" width="48" height="48">
+        <p>setton</p>
       </td>
       <td style="border-style: none;">
         <img src="/assets/bakyura-2x.svg" width="48" height="48" align="center">
