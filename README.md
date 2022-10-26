@@ -14,7 +14,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 
 # INSTALLATION
 
-Download the module and an example for it - [releases](#releases)
+Download the module and an example for it - [#releases](https://github.com/shishiawase/drrr-bot/releases)
 
 - ## Install dependencies:
     ```
