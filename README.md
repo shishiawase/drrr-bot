@@ -245,24 +245,24 @@ It may allow only certain users to enter the room or on the contrary prohibit it
   <table>
     <tr>
       <td align="center">
-        <img src="/assets/setton.svg" width="48" height="48" align="center">
-        <p align="center">setton </p>
+        <img src="/assets/setton.svg" width="48" height="48">
+        <p>setton </p>
       </td>
       <td td align="center">
-        <img src="/assets/bakyura-2x.svg" width="48" height="48" align="center">
-        <p text-align="center">bakyura-2x</p>
+        <img src="/assets/bakyura-2x.svg" width="48" height="48">
+        <p>bakyura-2x</p>
       </td>
       <td td align="center">
         <img src="/assets/bakyura.svg" width="48" height="48">
         <p>bakyura</p> 
       </td>
       <td td align="center">
-        <img src="/assets/eight.svg" width="48" height="48" align="center">
-        <p align="center">eight</p> 
+        <img src="/assets/eight.svg" width="48" height="48">
+        <p>eight</p> 
       </td>
       <td td align="center">
-        <img src="/assets/gaki-2x.svg" width="48" height="48" align="center">
-        <p align="center">gaki-2x</p> 
+        <img src="/assets/gaki-2x.svg" width="48" height="48">
+        <p>gaki-2x</p> 
       </td>
     <tr>
     <tr>
