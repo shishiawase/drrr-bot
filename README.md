@@ -242,7 +242,14 @@ It may allow only certain users to enter the room or on the contrary prohibit it
 
 - __Icons__:
   
-  <div id="badges" align="left">
+  #flex-container {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+  }
+  
+  <div id="flex-container">
     <p><img src="/assets/setton.svg" width="48" height="48" align="bottom">  <b>setton</b></p>
     <p><img src="/assets/bakyura-2x.svg" width="48" height="48" align="bottom">  <b>bakyura-2x</b></p>
     <p><img src="/assets/bakyura.svg" width="48" height="48" align="bottom">  <b>bakyura</b></p>
