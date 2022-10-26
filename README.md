@@ -240,12 +240,19 @@ It may allow only certain users to enter the room or on the contrary prohibit it
 
 # OTHER
 
+- __Devices__:
+  - Pc
+  - Phone,
+  - Tablet
+  - Tv
+  - Bot
+
 - __Icons__:
   
   <table>
     <tr>
       <td align="center">
-          <img src="/assets/setton.svg" width="48" height="48" align="center" style="display:inline-block;">
+          <img src="/assets/setton.svg" width="48" height="48" align="center">
           <p align="center">setton</p>
       </td>
       <td td align="center">
