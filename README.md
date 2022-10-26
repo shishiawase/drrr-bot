@@ -265,6 +265,50 @@ It may allow only certain users to enter the room or on the contrary prohibit it
         <p align="center">gaki-2x</p> 
       </td>
     <tr>
+    <tr>
+      <td align="center">
+        <img src="/assets/gg.svg" width="48" height="48" align="center">
+        <p align="center">gg</p> 
+      </td>
+      <td align="center">
+        <img src="/assets/junsui-2x.svg" width="48" height="48" align="center">
+        <p align="center">junsui-2x</p> 
+      </td>
+      <td align="center">
+        <img src="/assets/kakka.svg" width="48" height="48" align="center">
+        <p align="center">kakka</p> 
+      </td>
+      <td align="center">
+        <img src="/assets/kanra.svg" width="48" height="48" align="center">
+        <p align="center">kanra</p> 
+      </td>
+      <td align="center">
+        <img src="/assets/kanra-2x.svg" width="48" height="48" align="center">
+        <p align="center">kanra-2x</p> 
+      </td>
+    <tr>
+    <tr>
+      <td align="center">
+        <img src="/assets/kuromu-2x.svg" width="48" height="48" align="center">
+        <p align="center">kuromu-2x</p> 
+      </td>
+      <td align="center">
+        <img src="/assets/kyo-2x.svg" width="48" height="48" align="center">
+        <p align="center">kyo-2x</p> 
+      </td>
+      <td align="center">
+        <img src="/assets/rotchi-2x.svg" width="48" height="48" align="center">
+        <p align="center">rotchi-2x</p> 
+      </td>
+      <td align="center">
+        <img src="/assets/saki-2x.svg" width="48" height="48" align="center">
+        <p align="center">saki-2x</p> 
+      </td>
+      <td align="center">
+        <img src="/assets/san-2x.svg" width="48" height="48" align="center">
+        <p align="center">san-2x</p> 
+      </td>
+    <tr>
   </table>
   
   
