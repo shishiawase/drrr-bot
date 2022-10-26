@@ -242,9 +242,9 @@ It may allow only certain users to enter the room or on the contrary prohibit it
 
 - __Icons__:
   
-  <table style="width:100%">
-    <tr style="height:200px">
-      <td align="center" style="border: 1px solid #96D4D4;" height="50">
+  <table>
+    <tr>
+      <td align="center">
         <img src="/assets/setton.svg" width="48" height="48" align="center">
         <p align="center">setton </p>
       </td>
@@ -253,8 +253,8 @@ It may allow only certain users to enter the room or on the contrary prohibit it
         <p text-align="center">bakyura-2x</p>
       </td>
       <td td align="center">
-        <img src="/assets/bakyura.svg" width="48" height="48" align="bottom">
-        <p align="bottom">bakyura</p> 
+        <img src="/assets/bakyura.svg" width="48" height="48">
+        <p>bakyura</p> 
       </td>
       <td td align="center">
         <img src="/assets/eight.svg" width="48" height="48" align="center">
