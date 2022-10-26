@@ -243,7 +243,7 @@ It may allow only certain users to enter the room or on the contrary prohibit it
 - __Icons__:
   
   <table>
-    <tr>
+    <tr height="50">
       <td align="center" style="border: 1px solid #96D4D4;" height="50">
         <img src="/assets/setton.svg" width="48" height="48" align="center">
         <p align="center">setton </p>
