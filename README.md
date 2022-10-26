@@ -245,7 +245,7 @@ It may allow only certain users to enter the room or on the contrary prohibit it
   <table>
     <tr>
       <td align="center">
-        <p align="center">setton </p>
+        <p>setton </p>
         <img src="/assets/setton.svg" width="48" height="48" align="center">
       </td>
       <td td align="center">
