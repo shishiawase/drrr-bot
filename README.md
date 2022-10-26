@@ -22,7 +22,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 - ## Use this module:
     We import the module into our main.py (or some other name) in further examples, this part will be skipped
     ```python
-    from drrr.py import Bot
+    from drrr import Bot
     
     drrr = Bot('name', 'icon', 'device') # We determine the main parameters of the bot.
                                          # If you simply call Bot (), the default parameters
