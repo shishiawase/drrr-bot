@@ -2,12 +2,10 @@
 drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 
 - [INSTALLATION](#installation)
-- [FUNCTIONS AND PARAMETERS](#functions-and-parameters)
-    - [login](#login)
-    - [save](#savename)
-    - [load](#load)
-    - [startLoop](#startLoop)
-    - [stopLoop](#stopLoop)
+- [METHODS AND PARAMETERS](#methods-and-parameters)
+    - [Events](#events)
+    - [Timers](#timers)
+    - [Whitelist and blacklist](#whitelist-and-blacklist)
 - [EXAMPLES](#examples)
 - [OTHER](#other)
 
@@ -28,7 +26,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
     drrr = Bot('name', 'icon', 'device') # We determine the main parameters of the bot.
                                          # If you simply call Bot (), the default parameters
                                          # will be set: ('***', 'setton', 'Bot')
-                                         # Existing icons and devices can be viewed in "other"
+                                         # Existing icons and devices can be viewed in "OTHER"
                                          
     # And an example of use:
     
@@ -41,13 +39,13 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
     
 ***
 
-# FUNCTIONS AND PARAMETERS
+# METHODS AND PARAMETERS
 
 `*` - marked optional parameters
 
 ```python
 
-# -------------Required functions in code-------------
+--------------Required methods in code--------------
 
 drrr.login()                            # Always called after creating a bot class 
                                         # instance
@@ -58,7 +56,7 @@ drrr.startLoop(*seconds)                # Always called at the end for continuou
                                         #  ⤷ set a frequency for the date update in seconds.
                                         #  ⤷ Default - '1.5'
 
-# -------------------Other functions------------------
+--------------------Other methods-------------------
                                     
 drrr.save(*name)                        # Save current profile.
                                      
@@ -173,3 +171,16 @@ def hello():
 # To stop a certain timer, just do it:
 drrr.loops['hello'].stop() # where is 'hello' the name of the function that you launched in the timer
 ```
+## Events
+
+## Timers
+
+## Whitelist and Blacklist
+
+---
+
+# EXAMPLES
+
+---
+
+# OTHER
