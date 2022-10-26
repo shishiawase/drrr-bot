@@ -40,6 +40,10 @@ Download the module and an example for it - [releases](https://github.com/shishi
     drrr.startLoop() # Always called at the end for continuous data from the site
     ```
     Or use the example in the folder with the module `main.py` and edit it as you wish
+    And run
+    ```
+    $ python main.py 
+    ```
     
 ***
 
