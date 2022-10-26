@@ -43,7 +43,7 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 
 `*` - marked optional parameters
 
-```python
+```
 
 --------------Required_methods_in_code--------------
 
