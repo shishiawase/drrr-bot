@@ -148,18 +148,21 @@ Work with chat events, Thanks to this decorator, the function below it will pay 
   `["msg", "dm", "me", "join", "leave", "new-host","new-description", "room-profile", "music", "kick", "ban"]`
   
   ```python
-  @drrr.event(types, *command, *users)    # @Decorator. 
-  def someFunc(obj):                      # 'obj' in your function ALWAYS REQUIRED
+  @drrr.event(types, *command, *users)    
+  def someFunc(obj):                      
       pass                  
-                                          # types (List):
-                                          #  ⤷ What events will the function respond to. A complete
-                                          #  ⤷ list of events can be found in EVENTS
-                                          # command (String):
-                                          #  ⤷ A specific text command in chat for execution
-                                          # users (List):
-                                          #  ⤷ Users on which the event will respond
-                                          # obj (dict):
-                                          #  ⤷ Stores user information: type, user, msg, url, trip
+                                          
+  # @Decorator.                                         
+  # 'obj' in your function ALWAYS REQUIRED                                        
+  # types (List):                                        
+  #  ⤷ What events will the function respond to. A complete
+  #  ⤷ list of events can be found in EVENTS
+  # command (String):
+  #  ⤷ A specific text command in chat for execution
+  # users (List):
+  #  ⤷ Users on which the event will respond
+  # obj (dict):
+  #  ⤷ Stores user information: type, user, msg, url, trip
                                         
   ```
 
@@ -181,14 +184,19 @@ Method for calling functions through a fixed time
 
 - Used:
   ```python
-  @drrr.timer(*seconds, *minutes, *hours) # @Decorator. Repeatedly calls a function with a fixed time delay 
-  def hello():                            # between each call
+  
+  # @Decorator. 
+  
+  @drrr.timer(*seconds, *minutes, *hours) 
+  def hello():                            
       drrr.msg('Hi everyone')                            
+  # Repeatedly calls a function with a fixed time delay
+  # between each call
 
-
-  @drrr.later(*seconds, *minutes, *hours) # @Decorator. Сall the function once after a fixed time
+  @drrr.later(*seconds, *minutes, *hours)
   def hello():                            
       drrr.msg('Hi everyone')
+  # Сall the function once after a fixed time
     
   # You can set the interval both in seconds and in minutes, hours
   # or all at once together
