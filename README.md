@@ -58,22 +58,6 @@ drrr.startLoop(*seconds)                # Always called at the end for continuou
                                         #  ⤷ set a frequency for the date update in seconds.
                                         #  ⤷ Default - '1.5'
 
------------------------Events-----------------------
-
-@drrr.event(['join'], *command, *users) # @Decorator. Work with chat events, for example print 
-def someFunc(obj):                      # the name in the console of the user who joined
-    print(obj['name'])                  # the room. 'obj' in your function ALWAYS REQUIRED
-    
-                                        # types (List):
-                                        #  ⤷ What events will the function respond to. A complete
-                                        #  ⤷ list of events can be found in EVENTS
-                                        # command (String):
-                                        #  ⤷ A specific text command in chat for execution
-                                        # users (List):
-                                        #  ⤷ Users on which the event will respond
-                                        # obj (dict):
-                                        #  ⤷ Stores user information: type, name, msg, url, trip
-
 --------------------Other_methods-------------------
                                     
 drrr.save(*name)                        # Save current profile.
@@ -162,7 +146,9 @@ drrr.leave()                            # Leave the room
 ## Events
 
 Work with chat events, Thanks to this decorator, the function below it will pay attention only to the events that were given, ignoring the rest.
+
 All events:
+
 `["msg", "dm", "me", "join", "leave", "new-host","new-description", "room-profile", "music", "kick", "ban"]`
 
 ```python
