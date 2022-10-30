@@ -107,8 +107,8 @@ drrr.join(id)                           # Join the room with ID
 drrr.title(name)                        # Set name for room
                                         # name (String)
 
-drrr.desc(name)                         # Set description for room
-                                        # name (String)
+drrr.desc(desc)                         # Set description for room
+                                        # desc (String)
                                        
 drrr.host(name)                         # Transfer host
                                         # name (String)
