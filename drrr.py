@@ -345,8 +345,8 @@ class Bot:
     def _eventCall(self, events, obj):
         for e in events:
             for o in obj:
-                if e in o['type']:
-                    if o['trip']: o['trip'] = '#' + o['trip']
+                if e in o.type:
+                    if o.trip: o.trip = '#' + o.trip
 
                     for f in events[e]:
                         i = list(f.keys())[0]
@@ -355,8 +355,8 @@ class Bot:
                         trips = [users.pop(users.index(x)) for x in users if x.startswith('#')]
                         func = f[i]['func']
 
-                        if (cmd and cmd in o['msg']) or not cmd:
-                            if ((users and o['user'] in users) or (trips and o['trip'] in trips)) or (not users and not trips):
+                        if (cmd and cmd in o.msg) or not cmd:
+                            if ((users and o.user in users) or (trips and o.trip in trips)) or (not users and not trips):
                                 return func(o)
 
         
