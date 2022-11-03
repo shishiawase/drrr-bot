@@ -169,7 +169,7 @@ Work with chat events, Thanks to this decorator, the function below it will pay 
   #  ⤷ A specific text command in chat for execution
   # users (List):
   #  ⤷ Users on which the event will respond
-  # obj (dict):
+  # obj (Class):
   #  ⤷ Stores user information: type, user, msg, url, trip
                                         
   ```
@@ -178,7 +178,7 @@ Work with chat events, Thanks to this decorator, the function below it will pay 
   ```python
   @drrr.event(['join'])
   def greetings(obj):
-      drrr.msg(f'Hello @{obj['user']})
+      drrr.msg(f'Hello @{obj.user})
 
   # Output:
     # Steave joined.
@@ -259,26 +259,26 @@ It may allow only certain users to enter the room or on the contrary prohibit it
   
   @drrr.event(['msg', 'dm'], '/kick', admins)
   def kick(obj):
-      user = obj['msg'].replace('/kick ', '')
+      user = obj.msg.replace('/kick ', '')
       drrr.kick(user)
   
   @drrr.event(['msg', 'dm'], '/ban', admins)
   def ban(obj):
-      user = obj['msg'].replace('/ban ', '')
+      user = obj.msg.replace('/ban ', '')
       drrr.ban(user)
   
   @drrr.event(['msg', 'dm'], '/host', admins)
   def kick(obj):
-      drrr.host(obj['user'])
+      drrr.host(obj.user)
   
   @drrr.event(['msg', 'dm'], '/title', admins)
   def title(obj):
-      m = obj['msg'].replace('/title ', '')
+      m = obj.msg.replace('/title ', '')
       drrr.title(m)
   
   @drrr.event(['msg', 'dm'], '/desc', admins)
   def desc(obj):
-      m = obj['msg'].replace('/desc ', '')
+      m = obj.msg.replace('/desc ', '')
       drrr.desc(m)
   ```
 
@@ -301,7 +301,7 @@ It may allow only certain users to enter the room or on the contrary prohibit it
   
   @drrr.event(['msg'], '/luck')
   def luck(obj):
-      rand(random.randint(0, 3), obj['user'])
+      rand(random.randint(0, 3), obj.user)
   ```
 
 - Lock room
