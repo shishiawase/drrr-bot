@@ -269,7 +269,7 @@ It may allow only certain users to enter the room or on the contrary prohibit it
       drrr.ban(user)
   
   @drrr.event(['msg', 'dm'], '/host', admins)
-  def kick(obj):
+  def host(obj):
       drrr.host(obj.user)
   
   @drrr.event(['msg', 'dm'], '/title', admins)
