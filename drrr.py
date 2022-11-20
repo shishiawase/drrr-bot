@@ -520,8 +520,6 @@ class Bot:
     def title(self, name: str):
         name = name[:20]
         r = self.__cmd({ 'room_name': name })
-        if 'error' in r['text']:
-            logging.warning(f" | [Title] - {r['text']['error']}")
         return r
     
 
