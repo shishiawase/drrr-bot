@@ -226,11 +226,6 @@ class Bot:
         return arr
     
 
-    def _setInfo(self, room):
-        self.room = room
-        self.users = room.get('users') or []
-    
-
     def getProfile(self):
         r = self._get(f'{DRRRUrl}/profile/?api=json')
         if r['status'] != 200:
@@ -292,20 +287,25 @@ class Bot:
                 self.lounge()
                 self.loc = 'lounge'
                 return
+            
+            if self.users:
+                self.users = room.get('users') or []
+                
+                if self.rule['enable']:
+                    self._checkMode(self.rule['type'], self.users)
 
             self.loc = 'room'
             lastTime = (room.get('talks') and room['talks'][-1].get('time')) or 0
 
             if self.lastTime < lastTime:
                 if not self.lastTime:
-                    self._setInfo(room)
+                    self.room = room
                     self.lastTime = lastTime
                     return
 
                 self._setInfo(room)
                 lastTalks = self._talksFilter(room['talks'], self.lastTime)
                 self.lastTime = lastTime
-                if self.rule['enable']: self._checkMode(self.rule['type'], self.users)
                 self._eventCall(self.events, lastTalks)
         except:
             pass
