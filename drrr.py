@@ -282,17 +282,15 @@ class Bot:
         try:
             r = self._get(url)
             room = r.get('text') or []
+            self.users = room.get('users') or []
 
             if room.get('error') and 'Not in room' in room['error']:
                 self.lounge()
                 self.loc = 'lounge'
                 return
-            
-            if self.users:
-                self.users = room.get('users') or []
-                
-                if self.rule['enable']:
-                    self._checkMode(self.rule['type'], self.users)
+               
+            if self.rule['enable']:
+                self._checkMode(self.rule['type'], self.users)
 
             self.loc = 'room'
             lastTime = (room.get('talks') and room['talks'][-1].get('time')) or 0
