@@ -289,9 +289,6 @@ class Bot:
                 self.loc = 'lounge'
                 return
                
-            if self.rule['enable']:
-                self._checkMode(self.rule['type'], self.users)
-
             self.loc = 'room'
             lastTime = (room.get('talks') and room['talks'][-1].get('time')) or 0
 
@@ -301,9 +298,11 @@ class Bot:
                     self.lastTime = lastTime
                     return
 
-                self._setInfo(room)
+                self.room = room
                 lastTalks = self._talksFilter(room['talks'], self.lastTime)
                 self.lastTime = lastTime
+
+                if self.rule['enable']: self._checkMode(self.rule['type'], self.users)
                 self._eventCall(self.events, lastTalks)
         except:
             pass
@@ -413,11 +412,7 @@ class Bot:
 
     def whitelist(self, add: list[str]=[], addAll: bool=False, remove: list[str]=[], removeAll: bool=False, on: bool=None, mode: str=''):
         if mode: self.rule['mode']['whitelist'] = mode
-        if on:
-            self.rule['type'] = 'whitelist'
-            self.rule['enable'] = True
-        elif on is False: self.rule['enable'] = False
-
+        
         if add:
             for u in add:
                 if u not in self.userlist['whitelist']:
@@ -438,20 +433,22 @@ class Bot:
         if removeAll:
             for e in self.userlist['whitelist']:
                 self.userlist['whitelist'].remove(e)
+        
+        if on:
+            self.rule['type'] = 'whitelist'
+            self.rule['enable'] = True
+            self._checkMode(self.rule['type'], self.users)
+        elif on is False: self.rule['enable'] = False
     
 
     def blacklist(self, add: list[str]=[], remove: list[str]=[], removeAll: bool=False, on: bool=None, mode: str=''):
         if mode: self.rule['mode']['blacklist'] = mode
-        if on:
-            self.rule['type'] = 'blacklist'
-            self.rule['enable'] = True
-        elif on is False: self.rule['enable'] = False
 
         if add:
             for u in add:
                 if u not in self.userlist['blacklist']:
                     self.userlist['blacklist'].append(u)
-
+                    
         if remove:
             for u in remove:
                 for e in self.userlist['blacklist']:
@@ -461,6 +458,12 @@ class Bot:
         if removeAll:
             for e in self.userlist['blacklist']:
                 self.userlist['blacklist'].remove(e)
+        
+        if on:
+            self.rule['type'] = 'blacklist'
+            self.rule['enable'] = True
+            self._checkMode(self.rule['type'], self.users)
+        elif on is False: self.rule['enable'] = False
 
 
     def lounge(self):
