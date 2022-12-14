@@ -238,21 +238,23 @@ class Bot:
 
     def _checkMode(self, t, users):
         arr = []
+        _users = []
 
         for u in users:
             if u['name'] != self.profile['name']:
                 if u.get('tripcode'): arr.append('#' + u['tripcode'])
-                else: arr.append(u['name'])
+                arr.append(u['name'])
 
         for u in arr:
             if (t == 'whitelist' and u not in self.userlist[t]) or (t == 'blacklist' and u in self.userlist[t]):
-                user = ''
                 for i in users:
-                    if u == i['name'] or u == ('#' + i['tripcode']): user = i['name']
+                    if (u == i['name'] or u == ('#' + i['tripcode'])) and i['name'] not in _users:
+                        _users.append(i['name'])
                 
-                if 'kick' == self.rule['mode'][t]: self.kick(user)
-                elif 'ban' == self.rule['mode'][t]: self.ban(user)
-                elif 'report' == self.rule['mode'][t]: self.report(user)
+        for user in _users:
+            if 'kick' == self.rule['mode'][t]: self.kick(user)
+            elif 'ban' == self.rule['mode'][t]: self.ban(user)
+            elif 'report' == self.rule['mode'][t]: self.report(user)
 
         
     def startLoop(self, seconds=1.5):
@@ -289,6 +291,7 @@ class Bot:
                 self.loc = 'lounge'
                 return
                
+
             self.loc = 'room'
             lastTime = (room.get('talks') and room['talks'][-1].get('time')) or 0
 
@@ -412,7 +415,7 @@ class Bot:
 
     def whitelist(self, add: list[str]=[], addAll: bool=False, remove: list[str]=[], removeAll: bool=False, on: bool=None, mode: str=''):
         if mode: self.rule['mode']['whitelist'] = mode
-        
+
         if add:
             for u in add:
                 if u not in self.userlist['whitelist']:
@@ -448,7 +451,7 @@ class Bot:
             for u in add:
                 if u not in self.userlist['blacklist']:
                     self.userlist['blacklist'].append(u)
-                    
+
         if remove:
             for u in remove:
                 for e in self.userlist['blacklist']:
