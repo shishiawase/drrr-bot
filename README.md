@@ -151,7 +151,7 @@ drrr.leave()                            # Leave the room
 ```
 ## Events
 
-Work with chat events, Thanks to this decorator, the function below it will pay attention only to the events that were given, ignoring the rest.
+Work with chat events, thanks to this decorator, the function below it will pay attention only to the events that were given, ignoring the rest.
 
 - All types in events:
   `["msg", "dm", "me", "join", "leave", "new-host","new-description", "room-profile", "music", "kick", "ban"]`
