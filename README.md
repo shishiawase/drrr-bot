@@ -154,7 +154,7 @@ drrr.leave()                            # Leave the room
 Work with chat events, thanks to this decorator, the function below it will pay attention only to the events that were given, ignoring the rest.
 
 - All types in events:
-  `["msg", "dm", "me", "join", "leave", "new-host","new-description", "room-profile", "music", "kick", "ban"]`
+  `["msg", "dm", "me", "join", "leave", "new-host", "new-description", "room-profile", "music", "kick", "ban"]`
   
   ```python
   @drrr.event(types, *command, *users)    
@@ -167,7 +167,8 @@ Work with chat events, thanks to this decorator, the function below it will pay 
   #  ⤷ What events will the function respond to. A complete
   #  ⤷ list of events can be found in EVENTS
   # command (String):
-  #  ⤷ A specific text command in chat for execution
+  #  ⤷ A specific text command in chat for execution (supports regular expressions)
+  #  ⤷ work only with ['msg', 'dm', 'me']
   # users (List):
   #  ⤷ Users on which the event will respond
   # obj (Class):
@@ -179,11 +180,21 @@ Work with chat events, thanks to this decorator, the function below it will pay 
   ```python
   @drrr.event(['join'])
   def greetings(obj):
-      drrr.msg(f'Hello @{obj.user})
+      drrr.msg(f'Hello @{obj.user}')
 
   # Output:
     # Steave joined.
     # Bot: Hello @Steave
+  
+  
+  @drrr.event(['msg'], '^/tagme')
+  def greetings(obj):
+      drrr.msg(f'@{obj.user}')
+
+  # Output:
+    # Steave: pls /tagme!  |  will not work because '^' reg exp and the message should start with /tagme
+    # Steave: /tagme       |  work
+    # Bot: @Steave
   ```
   More [examples](#examples)
 
