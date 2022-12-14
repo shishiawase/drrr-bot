@@ -1,4 +1,5 @@
 import os
+import re
 import json
 import httpx
 import logging
@@ -355,7 +356,7 @@ class Bot:
                         trips = [users.pop(users.index(x)) for x in users if x.startswith('#')]
                         func = f[i]['func']
 
-                        if (cmd and cmd in o.msg) or not cmd:
+                        if (cmd and re.search(rf'{cmd}', o.msg)) or not cmd:
                             if ((users and o.user in users) or (trips and o.trip in trips)) or (not users and not trips):
                                 return func(o)
 
