@@ -358,7 +358,7 @@ class Bot:
 
                         if (cmd and re.search(rf'{cmd}', o.msg)) or not cmd:
                             if ((users and o.user in users) or (trips and o.trip in trips)) or (not users and not trips):
-                                return func(o)
+                                func(o)
 
         
     def event(self, types: list[str] = [], command: str = '', users: list[str] = []):
