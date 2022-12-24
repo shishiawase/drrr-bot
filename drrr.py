@@ -4,11 +4,19 @@ import json
 import httpx
 import logging
 import threading
+from dataclasses import dataclass
 
 client = httpx.Client(timeout=None)
 DRRRUrl = 'https://drrr.com'
 
 def request(url, **params):
+
+    @dataclass
+    class response:
+        status: int
+        headers: dict
+        text: dict | bool
+
     text = False
 
     if 'headers' in params:
@@ -18,11 +26,11 @@ def request(url, **params):
         data = params['data']
         res = client.post(url, data=data)
         if res.text.startswith('{'): text = res.json()
-        return { 'status': res.status_code, 'headers': res.headers, 'text': text }
+        return response(res.status_code, res.headers, text)
 
     res = client.get(url)
     if res.text.startswith('{'): text = res.json()
-    return { 'status': res.status_code, 'headers': res.headers, 'text': text }
+    return response(res.status_code, res.headers, text)
 
 def rJson(name: str):
     if not os.path.isfile(f'./configs/{name}.json'):
@@ -64,43 +72,53 @@ class Bot:
     userlist = {'whitelist': [], 'blacklist': []}
     rule = {'enable': False, 'type': '', 'mode': {'whitelist': 'kick', 'blacklist': 'kick'}}
 
-    def __init__(self, name: str = '***', icon: str = 'setton', device: str = 'Bot', lang: str = 'en-US'):
+    def __init__(self, name: str = '***', icon: str = 'setton', device: str = 'Bot', lang: str = 'en-US',
+        log=None):
 
         self.profile['name'] = name[:20]
         self.profile['icon'] = icon
         self.profile['lang'] = lang
         self.profile['device'] = device
+        self.log_level = log
 
-        logging.basicConfig(format= f'%(asctime)s [{name}][%(levelname)s]%(message)s', level=logging.INFO)
+        logging.basicConfig(format= f'%(asctime)s [{name}][%(levelname)s]%(message)s', level=self.log_level)
     
 
     class _Timer(threading.Thread):
-        def __init__(self, t: int, func):
+        def __init__(self, t: int, func, args: tuple = ()):
             threading.Thread.__init__(self)
             threading.Thread.name = f'DRRR _Timer ({func.__name__})'
             self.stopped = threading.Event()
             self.func = func
             self.t = t
+            self.args = args
 
         def run(self):
             while not self.stopped.wait(self.t):
-                self.func()
+                self.func(*self.args)
 
         def stop(self):
             self.stopped.set()
 
 
     class _Later(threading.Thread):
-        def __init__(self, t: int, func):
+        def __init__(self, t: int, func, inverse: bool = False, args: tuple = ()):
             threading.Thread.__init__(self)
-            threading.Thread.name = 'DRRR _Later'
+            threading.Thread.name = f'DRRR _Later ({func.__name__})'
             self.stopped = threading.Event()
             self.func = func
+            self.inverse = inverse
             self.t = t
+            self.args = args
+            self.res = None
 
         def run(self):
-            self.stopped.wait(self.t)
-            self.func()
+            if not self.inverse:
+                self.stopped.wait(self.t)
+                self.res = self.func(*self.args)
+            else:
+                self.res = self.func(*self.args)
+                self.stopped.wait(self.t)
 
         
     def login(self):
@@ -110,9 +128,9 @@ class Bot:
             
         
         r = getToken()
-        cookie = r['headers']['set-cookie'].partition(';')[0]
+        cookie = r.headers['set-cookie'].partition(';')[0]
         self.profile['cookie'] = cookie
-        token = r['text']['token']
+        token = r.text['token']
 
         form = {
             'name': self.profile['name'],
@@ -123,10 +141,10 @@ class Bot:
         }
 
         t = self._post(f'{DRRRUrl}/?api=json', form)
-        while 'drrr' not in t['headers']['set-cookie']:
+        while 'drrr' not in t.headers['set-cookie']:
             t = self._post(f'{DRRRUrl}/?api=json', form)
         
-        cookie = t['headers']['set-cookie'].partition(';')[0]
+        cookie = t.headers['set-cookie'].partition(';')[0]
         self.profile['cookie'] = cookie
         self.getProfile()
         logging.info(": Login ok")
@@ -156,6 +174,8 @@ class Bot:
         obj = rJson(name)
 
         if obj:
+            logging.basicConfig(format= f'%(asctime)s [{obj["name"]}][%(levelname)s]%(message)s', level=self.log_level)
+
             for i in obj:
                 self.profile[i] = obj[i]
             logging.info(': Config loaded')
@@ -170,7 +190,7 @@ class Bot:
         
         for x in talks:
             if x['time'] > time:
-                
+
                 class Obj:
                     def __init__(self):
                         if 'message' in x['type']:
@@ -229,10 +249,10 @@ class Bot:
 
     def getProfile(self):
         r = self._get(f'{DRRRUrl}/profile/?api=json')
-        if r['status'] != 200:
-            return logging.warning(f" | [getProfile]: {r['status']} {r['text']}")
+        if r.status != 200:
+            return logging.warning(f" | [getProfile]: {r.status} {r.text}")
 
-        profile = r['text'].get('profile') or {}
+        profile = r.text.get('profile') or {}
         for i in profile:
             self.profile[i] = profile[i]
     
@@ -284,7 +304,7 @@ class Bot:
         
         try:
             r = self._get(url)
-            room = r.get('text') or []
+            room = r.text or []
             self.users = room.get('users') or []
 
             if room.get('error') and 'Not in room' in room['error']:
@@ -312,14 +332,14 @@ class Bot:
             pass
 
 
-    def timer(self, seconds=0, minutes=0, hours=0):
+    def timer(self, seconds=0, minutes=0, hours=0, args: tuple = ()):
         sum_time = seconds + (minutes*60) + (hours*60*60)
         
         def actual_decorator(func):
             def wrapper():
                 if sum_time:
                     if func.__name__ not in self.loops:
-                        self.loops[func.__name__] = self._Timer(sum_time, func)
+                        self.loops[func.__name__] = self._Timer(sum_time, func, args=args)
                         self.loops[func.__name__].start()
                 else:
                     return logging.error(' | [Timer]: No time set')
@@ -328,13 +348,13 @@ class Bot:
         return actual_decorator
     
 
-    def later(self, seconds=0, minutes=0, hours=0):
+    def later(self, seconds=0, minutes=0, hours=0, args: tuple = ()):
         sum_time = seconds + (minutes*60) + (hours*60*60)
 
         def actual_decorator(func):
             def wrapper():
                 if sum_time:
-                    task = self._Later(sum_time, func)
+                    task = self._Later(sum_time, func, args=args)
                     task.start()
                 else:
                     return logging.error(' | [Later]: No time set')
@@ -390,9 +410,9 @@ class Bot:
         url = DRRRUrl + '/room/?ajax=1&api=json'
 
         r = self._post(url, cmd)
-        if r['status'] != 200:
+        if r.status != 200:
             
-            logging.warning(f" | [{list(cmd.keys())[0]}]: {r['status']} {r['text']}")
+            logging.warning(f" | [{list(cmd.keys())[0]}]: {r.status} {r.text}")
             return r
         return r
 
@@ -403,15 +423,17 @@ class Bot:
         if not self.queueON:
             self.queueON = True
 
-            def _queue():
-                if len(self.queue):
-                    r = self._cmd(self.queue.pop(0))
-                    x = self._Later(1.5, _queue)
+            def qq():
+                try:
+                    x = self._Later(1.5, self._cmd, True, (self.queue.pop(0)))
                     x.start()
-                    return r
-                else: self.queueON = False
+                    x.join()
+                    return x.res
+                finally:
+                    if len(self.queue): qq()
+                    else: self.queueON = False
             
-            _queue()
+            return qq()
     
 
     def whitelist(self, add: list[str]=[], addAll: bool=False, remove: list[str]=[], removeAll: bool=False, on: bool=None, mode: str=''):
@@ -472,10 +494,10 @@ class Bot:
 
     def lounge(self):
         r = self._get(f'{DRRRUrl}/lounge?api=json')
-        if r['status'] != 200:
-            return logging.warning(f" | [Lounge]: {r['status']} {r['text']}")
+        if r.status != 200:
+            return logging.warning(f" | [Lounge]: {r.status} {r.text}")
 
-        self.rooms = r['text'].get('rooms') or []
+        self.rooms = r.text.get('rooms') or []
     
 
     def create(self,
@@ -500,10 +522,10 @@ class Bot:
         }
         
         r = self._post(f'{DRRRUrl}/create_room/?api=json', form)
-        if 'error' in r['text']:
-            logging.warning(f" | [Create]: {r['text']['error']}")
-        if r['status'] != 200:
-            logging.warning(f" | [Create]: {r['status']} {r['text']}")
+        if 'error' in r.text:
+            logging.warning(f" | [Create]: {r.text['error']}")
+        if r.status != 200:
+            logging.warning(f" | [Create]: {r.status} {r.text}")
             return r
         
         self._update()
@@ -512,10 +534,10 @@ class Bot:
 
     def join(self, id: str):
         r = self._get(f'{DRRRUrl}/room/?id={id}&api=json')
-        if 'error' in r['text']:
-            logging.warning(f" | [Join]: {r['text']['error']}")
-        if r['status'] != 200:
-            logging.warning(f" | [Join]: {r['status']} {r['text']}")
+        if 'error' in r.text:
+            logging.warning(f" | [Join]: {r.text['error']}")
+        if r.status != 200:
+            logging.warning(f" | [Join]: {r.status} {r.text}")
             return r
 
         self._update()
@@ -560,7 +582,7 @@ class Bot:
 
         if url: msg[0]['url'] = url
         for x in msg:
-            self.__cmd(x)
+            return self.__cmd(x)
     
 
     def dm(self, name: str, msg: str, url: str = ''):
