@@ -25,12 +25,15 @@ or just download `drrr.py` from the repository folder
 - ## Use this module:
     Import the module into our `main.py` (or some other name) in further examples, this part will be skipped
     ```python
-    from drrr import Bot
+    from drrr import Bot, logging
     
-    drrr = Bot('name', 'icon', 'device') # We determine the main parameters of the bot.
-                                         # If you simply call Bot (), the default parameters
-                                         # will be set: ('***', 'setton', 'Bot')
-                                         # Existing icons and devices can be viewed in "OTHER"
+    drrr = Bot('name', 'icon', 'device', log=logging.INFO)
+                                        
+    # We determine the main parameters of the bot.
+    # If you simply call Bot (), the default parameters
+    # will be set: ('***', 'setton', 'Bot', log=None)
+    # log - turn logging, levels - INFO, WARNING, ERROR
+    # Existing icons and devices can be viewed in "OTHER"
                                          
     # And an example of use:
     
@@ -207,13 +210,14 @@ Method for calling functions through a fixed time
   
   # @Decorator. 
   
-  @drrr.timer(*seconds, *minutes, *hours) 
+  @drrr.timer(*seconds, *minutes, *hours, *args) 
   def hello():                            
       drrr.msg('Hi everyone')                            
   # Repeatedly calls a function with a fixed time delay
+  # args - transfers arguments to a function - type ()
   # between each call
 
-  @drrr.later(*seconds, *minutes, *hours)
+  @drrr.later(*seconds, *minutes, *hours, *args)
   def hello():                            
       drrr.msg('Hi everyone')
   # Сall the function once after a fixed time
@@ -226,9 +230,9 @@ Method for calling functions through a fixed time
   ```
 - Example keep room:
   ```python
-  @drrr.timer(minutes=10)
-  def keep():
-      drrr.dm(drrr.profile['name'], 'keep')
+  @drrr.timer(minutes=10, args=(drrr.profile['name'], 'keep'))
+  def keep(bot_name, msg):
+      drrr.dm(bot_name, msg)
   
   # every 10 minutes will send to himself in dm 'keep'
   ```
