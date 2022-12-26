@@ -127,7 +127,7 @@ drrr.music(name, url)                   # Play music
                                         # url (String):
                                         # ⤷ Url link to music
 
-drrr.msg(msg, *url)                      # Sending a message to a common chat (any length, bot will split
+drrr.msg(msg, *url)                     # Sending a message to a common chat (any length, bot will split
                                         # one large into several messages
                                         
                                         # msg (String):
@@ -135,7 +135,7 @@ drrr.msg(msg, *url)                      # Sending a message to a common chat (a
                                         # url (String):
                                         # ⤷ Add url link
 
-drrr.dm(name, msg, *url)                 # Sending a private message to a common chat (any length, bot will split
+drrr.dm(name, msg, *url)                # Sending a private message to a common chat (any length, bot will split
                                         # one large into several messages
                                         
                                         # name (String):
