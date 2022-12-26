@@ -161,11 +161,11 @@ Work with chat events, thanks to this decorator, the function below it will pay 
   
   ```python
   @drrr.event(types, *command, *users)    
-  def someFunc(obj):                      
+  def someFunc(e):                      
       pass                  
                                           
   # @Decorator.                                         
-  # 'obj' in your function ALWAYS REQUIRED                                        
+  # 'e' in your function ALWAYS REQUIRED                                        
   # types (List):                                        
   #  ⤷ What events will the function respond to. A complete
   #  ⤷ list of events can be found in EVENTS
@@ -174,7 +174,7 @@ Work with chat events, thanks to this decorator, the function below it will pay 
   #  ⤷ work only with ['msg', 'dm', 'me']
   # users (List):
   #  ⤷ Users on which the event will respond
-  # obj (Class):
+  # e (Class):
   #  ⤷ Stores user information: type, user, msg, url, trip
                                         
   ```
@@ -182,8 +182,8 @@ Work with chat events, thanks to this decorator, the function below it will pay 
 - Setting a greeting at the entrance, example:
   ```python
   @drrr.event(['join'])
-  def greetings(obj):
-      drrr.msg(f'Hello @{obj.user}')
+  def greetings(ej):
+      drrr.msg(f'Hello @{e.user}')
 
   # Output:
     # Steave joined.
@@ -191,8 +191,8 @@ Work with chat events, thanks to this decorator, the function below it will pay 
   
   
   @drrr.event(['msg'], '^/tagme')
-  def greetings(obj):
-      drrr.msg(f'@{obj.user}')
+  def greetings(e):
+      drrr.msg(f'@{e.user}')
 
   # Output:
     # Steave: pls /tagme!  |  will not work because '^' reg exp and the message should start with /tagme
@@ -274,27 +274,27 @@ It may allow only certain users to enter the room or on the contrary prohibit it
   admins = ['#firsttrip', '#sectrip']
   
   @drrr.event(['msg', 'dm'], '/kick', admins)
-  def kick(obj):
-      user = obj.msg.replace('/kick ', '')
+  def kick(e):
+      user = e.msg.replace('/kick ', '')
       drrr.kick(user)
   
   @drrr.event(['msg', 'dm'], '/ban', admins)
-  def ban(obj):
-      user = obj.msg.replace('/ban ', '')
+  def ban(e):
+      user = e.msg.replace('/ban ', '')
       drrr.ban(user)
   
   @drrr.event(['msg', 'dm'], '/host', admins)
-  def host(obj):
-      drrr.host(obj.user)
+  def host(e):
+      drrr.host(e.user)
   
   @drrr.event(['msg', 'dm'], '/title', admins)
-  def title(obj):
-      m = obj.msg.replace('/title ', '')
+  def title(e):
+      m = e.msg.replace('/title ', '')
       drrr.title(m)
   
   @drrr.event(['msg', 'dm'], '/desc', admins)
-  def desc(obj):
-      m = obj.msg.replace('/desc ', '')
+  def desc(e):
+      m = e.msg.replace('/desc ', '')
       drrr.desc(m)
   ```
 
@@ -316,8 +316,8 @@ It may allow only certain users to enter the room or on the contrary prohibit it
               drrr.msg(f'You are lucky! @{u}')
   
   @drrr.event(['msg'], '/luck')
-  def luck(obj):
-      rand(random.randint(0, 3), obj.user)
+  def luck(e):
+      rand(random.randint(0, 3), e.user)
   ```
 
 - Lock room
@@ -325,12 +325,12 @@ It may allow only certain users to enter the room or on the contrary prohibit it
   # adds everyone to the whitelist and does not let anyone new into the room
   
   @drrr.event(['msg'], '/lock', ['yourName', '#trip'])
-  def lock(obj):
+  def lock(e):
       drrr.whitelist(addAll=True, on=True)
       drrr.msg('Whitelist enabled')
   
   @drrr.event(['msg'], '/unlock', ['yourName', '#trip'])
-  def unlock(obj):
+  def unlock(e):
       drrr.whitelist(removeAll=True, on=False)
       drrr.msg('Whitelist disabled')
   ```
@@ -342,7 +342,7 @@ It may allow only certain users to enter the room or on the contrary prohibit it
   # send random image
   
   @drrr.event(['msg'], '/waifu')
-  def waifu(obj):
+  def waifu(e):
       r = httpx.get('https://api.waifu.pics/sfw/waifu').json()
       drrr.msg('♥', r['url'])
   ```
