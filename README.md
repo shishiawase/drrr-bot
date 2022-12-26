@@ -17,11 +17,6 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 Download the module with examples here - [releases](https://github.com/shishiawase/drrr-bot/releases) 
 or just download `drrr.py` from the repository folder
 
-- ## Install dependencies:
-    ```
-    $ pip install httpx
-    ```
-    
 - ## Use this module:
     Import the module into our `main.py` (or some other name) in further examples, this part will be skipped
     ```python
@@ -337,13 +332,13 @@ It may allow only certain users to enter the room or on the contrary prohibit it
 
 - Random pics
   ```python
-  import httpx
+  import requests
   
   # send random image
   
   @drrr.event(['msg'], '/waifu')
   def waifu(e):
-      r = httpx.get('https://api.waifu.pics/sfw/waifu').json()
+      r = requests.get('https://api.waifu.pics/sfw/waifu').json()
       drrr.msg('♥', r['url'])
   ```
 ---
