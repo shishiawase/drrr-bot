@@ -1,12 +1,11 @@
 import os
 import re
 import json
-import httpx
 import logging
+import requests
 import threading
 from dataclasses import dataclass
 
-client = httpx.Client(timeout=None)
 DRRRUrl = 'https://drrr.com'
 
 def request(url, **params):
@@ -18,17 +17,15 @@ def request(url, **params):
         text: dict | bool
 
     text = False
-
-    if 'headers' in params:
-        client.headers = params['headers']
+    headers = params.get('headers') or None
 
     if 'data' in params:
         data = params['data']
-        res = client.post(url, data=data)
+        res = requests.post(url, headers=headers, data=data)
         if res.text.startswith('{'): text = res.json()
         return response(res.status_code, res.headers, text)
 
-    res = client.get(url)
+    res = requests.get(url, headers=headers)
     if res.text.startswith('{'): text = res.json()
     return response(res.status_code, res.headers, text)
 
@@ -72,17 +69,14 @@ class Bot:
     userlist = {'whitelist': [], 'blacklist': []}
     rule = {'enable': False, 'type': '', 'mode': {'whitelist': 'kick', 'blacklist': 'kick'}}
 
-    def __init__(self, name: str = '***', icon: str = 'setton', device: str = 'Bot', lang: str = 'en-US',
-        log=None):
+    def __init__(self, name: str = '***', icon: str = 'setton',
+        device: str = 'Bot', lang: str = 'en-US', log=None):
 
         self.profile['name'] = name[:20]
         self.profile['icon'] = icon
         self.profile['lang'] = lang
         self.profile['device'] = device
         self.log_level = log
-
-        logging.basicConfig(format= f'%(asctime)s [{name}][%(levelname)s]%(message)s', level=self.log_level)
-    
 
     class _Timer(threading.Thread):
         def __init__(self, t: int, func, args: tuple = ()):
@@ -147,6 +141,8 @@ class Bot:
         cookie = t.headers['set-cookie'].partition(';')[0]
         self.profile['cookie'] = cookie
         self.getProfile()
+
+        logging.basicConfig(format= f'%(asctime)s [{self.profile["name"]}][%(levelname)s]%(message)s', level=self.log_level)
         logging.info(": Login ok")
 
 
@@ -423,17 +419,17 @@ class Bot:
         if not self.queueON:
             self.queueON = True
 
-            def qq():
+            def q():
                 try:
-                    x = self._Later(1.5, self._cmd, True, (self.queue.pop(0)))
+                    x = self._Later(1.5, self._cmd, True, (self.queue.pop(0),))
                     x.start()
                     x.join()
                     return x.res
                 finally:
-                    if len(self.queue): qq()
+                    if len(self.queue): q()
                     else: self.queueON = False
             
-            return qq()
+            return q()
     
 
     def whitelist(self, add: list[str]=[], addAll: bool=False, remove: list[str]=[], removeAll: bool=False, on: bool=None, mode: str=''):
