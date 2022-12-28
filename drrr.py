@@ -511,12 +511,12 @@ class Bot:
             'description': desc[:140],
             'limit': limit,
             'language': lang,
-            'music': music,
-            'adult': adult,
-            'conceal': hidden,
+            'music': str(music).lower(),
+            'adult': str(adult).lower(),
+            'conceal': str(hidden).lower(),
             'submit': 'Create+Room'
         }
-        
+
         r = self._post(f'{DRRRUrl}/create_room/?api=json', form)
         if 'error' in r.text:
             logging.warning(f" | [Create]: {r.text['error']}")
