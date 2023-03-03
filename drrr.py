@@ -2,11 +2,12 @@ import os
 import re
 import json
 import logging
-import requests
+import requests as req
 import threading
 from dataclasses import dataclass
 
 DRRRUrl = 'https://drrr.com'
+requests = req.Session()
 
 def request(url, **params):
 
@@ -79,11 +80,19 @@ class Bot:
         self.log_level = log
 
     class _Timer(threading.Thread):
-        def __init__(self, t: int, func, args: tuple = ()):
+        def __init__(self,
+            t: int,
+            func,
+            count: int = None,
+            func_count = None,
+            args: tuple = ()):
+
             threading.Thread.__init__(self)
             threading.Thread.name = f'DRRR _Timer ({func.__name__})'
             self.stopped = threading.Event()
             self.func = func
+            self.count = count
+            self.func_count = func_count
             self.t = t
             self.args = args
 
@@ -91,28 +100,29 @@ class Bot:
             while not self.stopped.wait(self.t):
                 self.func(*self.args)
 
+                if self.count is not None:
+                    if self.count != 0: self.count -= 1
+                    else:
+                        if self.func_count: self.func_count()
+                        self.stopped.set()
+
         def stop(self):
             self.stopped.set()
 
 
     class _Later(threading.Thread):
-        def __init__(self, t: int, func, inverse: bool = False, args: tuple = ()):
+        def __init__(self, t: int, func, args: tuple = ()):
             threading.Thread.__init__(self)
             threading.Thread.name = f'DRRR _Later ({func.__name__})'
             self.stopped = threading.Event()
             self.func = func
-            self.inverse = inverse
             self.t = t
             self.args = args
             self.res = None
 
         def run(self):
-            if not self.inverse:
-                self.stopped.wait(self.t)
-                self.res = self.func(*self.args)
-            else:
-                self.res = self.func(*self.args)
-                self.stopped.wait(self.t)
+            self.stopped.wait(self.t)
+            self.res = self.func(*self.args)
 
         
     def login(self):
@@ -123,6 +133,7 @@ class Bot:
         
         r = getToken()
         cookie = r.headers['set-cookie'].partition(';')[0]
+        
         self.profile['cookie'] = cookie
         token = r.text['token']
 
@@ -310,15 +321,14 @@ class Bot:
                
 
             self.loc = 'room'
+            self.room = room
             lastTime = (room.get('talks') and room['talks'][-1].get('time')) or 0
 
             if self.lastTime < lastTime:
                 if not self.lastTime:
-                    self.room = room
                     self.lastTime = lastTime
                     return
 
-                self.room = room
                 lastTalks = self._talksFilter(room['talks'], self.lastTime)
                 self.lastTime = lastTime
 
@@ -328,14 +338,26 @@ class Bot:
             pass
 
 
-    def timer(self, seconds=0, minutes=0, hours=0, args: tuple = ()):
+    def timer(self,
+        seconds=0,
+        minutes=0,
+        hours=0,
+        count: int = None,
+        func_count = None,
+        args: tuple = ()):
+
         sum_time = seconds + (minutes*60) + (hours*60*60)
         
         def actual_decorator(func):
             def wrapper():
                 if sum_time:
                     if func.__name__ not in self.loops:
-                        self.loops[func.__name__] = self._Timer(sum_time, func, args=args)
+                        self.loops[func.__name__] = self._Timer(
+                            sum_time,
+                            func,
+                            count=count,
+                            func_count=func_count,
+                            args=args)
                         self.loops[func.__name__].start()
                 else:
                     return logging.error(' | [Timer]: No time set')
@@ -418,18 +440,15 @@ class Bot:
 
         if not self.queueON:
             self.queueON = True
+            self._cmd(self.queue.pop(0))
 
             def q():
-                try:
-                    x = self._Later(1.5, self._cmd, True, (self.queue.pop(0),))
-                    x.start()
-                    x.join()
-                    return x.res
-                finally:
-                    if len(self.queue): q()
-                    else: self.queueON = False
+                if len(self.queue):
+                    self._cmd(self.queue.pop(0))
+                    self._Later(1.5, q).start()
+                else: self.queueON = False
             
-            return q()
+            self._Later(1.5, q).start()
     
 
     def whitelist(self, add: list[str]=[], addAll: bool=False, remove: list[str]=[], removeAll: bool=False, on: bool=None, mode: str=''):
@@ -453,8 +472,7 @@ class Bot:
                     else: self.userlist['whitelist'].append('#' + u['tripcode'])
 
         if removeAll:
-            for e in self.userlist['whitelist']:
-                self.userlist['whitelist'].remove(e)
+            self.userlist['whitelist'] = []
         
         if on:
             self.rule['type'] = 'whitelist'
@@ -478,8 +496,7 @@ class Bot:
                         self.userlist['blacklist'].remove(u)
         
         if removeAll:
-            for e in self.userlist['blacklist']:
-                self.userlist['blacklist'].remove(e)
+            self.userlist['blacklist'] = []
         
         if on:
             self.rule['type'] = 'blacklist'
@@ -578,7 +595,7 @@ class Bot:
 
         if url: msg[0]['url'] = url
         for x in msg:
-            return self.__cmd(x)
+            self.__cmd(x)
     
 
     def dm(self, name: str, msg: str, url: str = ''):
@@ -588,6 +605,7 @@ class Bot:
         for x in self.users:
             if x['name'] == name:
                 u = x
+
         if not u:
             return logging.warning(f" | [Dm]: {name} - not found.")
 
