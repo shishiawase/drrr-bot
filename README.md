@@ -24,12 +24,12 @@ or just download `drrr.py` from the repository folder
     ```python
     from drrr import Bot, logging
     
-    drrr = Bot('name', 'icon', 'device', log=logging.INFO)
+    drrr = Bot('name', 'icon', 'device')
+    drrr.logger.setLevel(level=logging.INFO)   # Default set WARNING
                                         
     # We determine the main parameters of the bot.
     # If you simply call Bot (), the default parameters
-    # will be set: ('***', 'setton', 'Bot', log=None)
-    # log - turn logging, levels - INFO, WARNING, ERROR
+    # will be set: ('***', 'setton', 'Bot')
     # Existing icons and devices can be viewed in "OTHER"
                                          
     # And an example of use:
