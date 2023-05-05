@@ -11,6 +11,8 @@ drrr-bot - modular bot on python for [drrr.com](https://drrr.com)
 
 `*` - _marked optional parameters_
 
+packages: requests
+
 
 # INSTALLATION
 
