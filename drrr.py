@@ -53,6 +53,23 @@ def wJson(name: str, profile: dict):
         f.write(json.dumps(obj))
 
 
+def get_logger(
+logger_name,
+level = logging.ERROR):
+
+    log = logging.getLogger(logger_name)
+    log.setLevel(level=logging.DEBUG)
+
+    formatter = logging.Formatter('%(asctime)s: [%(name)s][%(levelname)s] --- %(message)s')
+
+    ch = logging.StreamHandler()
+    ch.setFormatter(formatter)
+    ch.setLevel(level=level)
+
+    log.addHandler(ch)
+    return  log
+
+
 class Bot:
 
     events = {}
@@ -71,40 +88,29 @@ class Bot:
     rule = {'enable': False, 'type': '', 'mode': {'whitelist': 'kick', 'blacklist': 'kick'}}
 
     def __init__(self, name: str = '***', icon: str = 'setton',
-        device: str = 'Bot', lang: str = 'en-US', log=None):
+        device: str = 'Bot', lang: str = 'en-US'):
+
+        self.logger = get_logger(f'DRRR({name[:20]})')
 
         self.profile['name'] = name[:20]
         self.profile['icon'] = icon
         self.profile['lang'] = lang
         self.profile['device'] = device
-        self.log_level = log
+        
 
     class _Timer(threading.Thread):
-        def __init__(self,
-            t: int,
-            func,
-            count: int = None,
-            func_count = None,
-            args: tuple = ()):
+        def __init__(self, t: int, func, args: tuple = ()):
 
             threading.Thread.__init__(self)
             threading.Thread.name = f'DRRR _Timer ({func.__name__})'
             self.stopped = threading.Event()
             self.func = func
-            self.count = count
-            self.func_count = func_count
             self.t = t
             self.args = args
 
         def run(self):
             while not self.stopped.wait(self.t):
                 self.func(*self.args)
-
-                if self.count is not None:
-                    if self.count != 0: self.count -= 1
-                    else:
-                        if self.func_count: self.func_count()
-                        self.stopped.set()
 
         def stop(self):
             self.stopped.set()
@@ -118,11 +124,10 @@ class Bot:
             self.func = func
             self.t = t
             self.args = args
-            self.res = None
 
         def run(self):
             self.stopped.wait(self.t)
-            self.res = self.func(*self.args)
+            self.func(*self.args)
 
         
     def login(self):
@@ -153,8 +158,7 @@ class Bot:
         self.profile['cookie'] = cookie
         self.getProfile()
 
-        logging.basicConfig(format= f'%(asctime)s [{self.profile["name"]}][%(levelname)s]%(message)s', level=self.log_level)
-        logging.info(": Login ok")
+        self.logger.info("Login ok")
 
 
     def _post(self, url, cmd):
@@ -174,7 +178,7 @@ class Bot:
 
     def save(self, name: str = 'config'):
         wJson(name, self.profile)
-        logging.info(': Config saved')
+        self.logger.info('Config saved')
     
 
     def load(self, name: str = 'config'):
@@ -185,7 +189,7 @@ class Bot:
 
             for i in obj:
                 self.profile[i] = obj[i]
-            logging.info(': Config loaded')
+            self.logger.info('Config loaded')
             self._update()
 
             return True
@@ -257,7 +261,7 @@ class Bot:
     def getProfile(self):
         r = self._get(f'{DRRRUrl}/profile/?api=json')
         if r.status != 200:
-            return logging.warning(f" | [getProfile]: {r.status} {r.text}")
+            return self.logger.warning(f"[getProfile]: {r.status} {r.text}")
 
         profile = r.text.get('profile') or {}
         for i in profile:
@@ -290,7 +294,7 @@ class Bot:
         if not self.loopId:
             self.loopId = self._Timer(seconds, self._update)
             self.loopId.start()
-            logging.info(': Loop started')
+            self.logger.info('Loop started')
     
 
     def stopLoop(self):
@@ -298,7 +302,7 @@ class Bot:
         if self.loopId:
             self.loopId.stop()
             self.loopId = None
-            logging.info(': Loop stopped')
+            self.logger.info('Loop stopped')
 
 
     def _update(self):
@@ -360,7 +364,7 @@ class Bot:
                             args=args)
                         self.loops[func.__name__].start()
                 else:
-                    return logging.error(' | [Timer]: No time set')
+                    return self.logger.error('[Timer]: No time set')
 
             return wrapper()
         return actual_decorator
@@ -375,7 +379,7 @@ class Bot:
                     task = self._Later(sum_time, func, args=args)
                     task.start()
                 else:
-                    return logging.error(' | [Later]: No time set')
+                    return self.logger.error('[Later]: No time set')
 
             return wrapper()
         return actual_decorator
@@ -405,8 +409,8 @@ class Bot:
 
         for i in types:
             if i not in type_list:
-                logging.error(
-                    f' | [Event]: '
+                self.logger.error(
+                    f'[Event]: '
                     f'types empty or this type(s) is not. All types: '
                     f'["msg", "dm", "me", "join", "leave", "new-host", "new-description", "room-profile", "music", "kick", "ban"]'
                 )
@@ -430,7 +434,7 @@ class Bot:
         r = self._post(url, cmd)
         if r.status != 200:
             
-            logging.warning(f" | [{list(cmd.keys())[0]}]: {r.status} {r.text}")
+            self.logger.warning(f"[{list(cmd.keys())[0]}]: {r.status} {r.text}")
             return r
         return r
 
@@ -508,7 +512,7 @@ class Bot:
     def lounge(self):
         r = self._get(f'{DRRRUrl}/lounge?api=json')
         if r.status != 200:
-            return logging.warning(f" | [Lounge]: {r.status} {r.text}")
+            return self.logger.warning(f"[Lounge]: {r.status} {r.text}")
 
         self.rooms = r.text.get('rooms') or []
     
@@ -536,9 +540,9 @@ class Bot:
 
         r = self._post(f'{DRRRUrl}/create_room/?api=json', form)
         if 'error' in r.text:
-            logging.warning(f" | [Create]: {r.text['error']}")
+            self.logger.warning(f"[Create]: {r.text['error']}")
         if r.status != 200:
-            logging.warning(f" | [Create]: {r.status} {r.text}")
+            self.logger.warning(f"[Create]: {r.status} {r.text}")
             return r
         
         self._update()
@@ -548,9 +552,9 @@ class Bot:
     def join(self, id: str):
         r = self._get(f'{DRRRUrl}/room/?id={id}&api=json')
         if 'error' in r.text:
-            logging.warning(f" | [Join]: {r.text['error']}")
+            self.logger.warning(f"[Join]: {r.text['error']}")
         if r.status != 200:
-            logging.warning(f" | [Join]: {r.status} {r.text}")
+            self.logger.warning(f"[Join]: {r.status} {r.text}")
             return r
 
         self._update()
@@ -575,7 +579,7 @@ class Bot:
             if x['name'] == name:
                 u = x
         if not u:
-            return logging.warning(f" | [Host]: {name} - not found.")
+            return self.logger.warning(f"[Host]: {name} - not found.")
         r = self.__cmd({ 'new_host': u['id'] })
         return r
     
@@ -607,7 +611,7 @@ class Bot:
                 u = x
 
         if not u:
-            return logging.warning(f" | [Dm]: {name} - not found.")
+            return self.logger.warning(f"[Dm]: {name} - not found.")
 
         if url: msg[0]['url'] = url
         for x in msg:
@@ -621,7 +625,7 @@ class Bot:
             if x['name'] == name:
                 u = x
         if not u:
-            return logging.warning(f" | [Kick]: {name} - not found.")
+            return self.logger.warning(f"[Kick]: {name} - not found.")
         r = self.__cmd({ 'kick': u['id'] })
         return r
     
@@ -632,7 +636,7 @@ class Bot:
             if x['name'] == name:
                 self._users[x['name']] = x
                 u = x
-        if not u: return logging.warning(f" | [Ban]: {name} - not found.")
+        if not u: return self.logger.warning(f"[Ban]: {name} - not found.")
         r = self.__cmd({ 'ban': u['id'] })
         return r
     
@@ -643,7 +647,7 @@ class Bot:
             if x['name'] == name:
                 self._users[x['name']] = x
                 u = x
-        if not u: return logging.warning(f" | [Report]: {name} - not found.")
+        if not u: return self.logger.warning(f"[Report]: {name} - not found.")
         r = self.__cmd({ 'report_and_ban_user': u['id'] })
         return r
     
