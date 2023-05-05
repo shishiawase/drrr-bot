@@ -55,7 +55,7 @@ def wJson(name: str, profile: dict):
 
 def get_logger(
 logger_name,
-level = logging.ERROR):
+level = logging.WARNING):
 
     log = logging.getLogger(logger_name)
     log.setLevel(level=logging.DEBUG)
