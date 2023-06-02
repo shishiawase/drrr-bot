@@ -77,6 +77,7 @@ class Bot:
     room = {}
     profile = {}
     loops = {}
+    data = {}
     queue = []
     rooms = []
     users = []
@@ -185,7 +186,7 @@ class Bot:
         obj = rJson(name)
 
         if obj:
-            logging.basicConfig(format= f'%(asctime)s [{obj["name"]}][%(levelname)s]%(message)s', level=self.log_level)
+            self.logger = get_logger(f'DRRR({obj["name"]})')
 
             for i in obj:
                 self.profile[i] = obj[i]
@@ -327,7 +328,8 @@ class Bot:
             self.loc = 'room'
             self.room = room
             lastTime = (room.get('talks') and room['talks'][-1].get('time')) or 0
-
+            
+            if not self.lastTime: self.lastTime = room.get('update') or 0
             if self.lastTime < lastTime:
                 if not self.lastTime:
                     self.lastTime = lastTime
@@ -346,8 +348,6 @@ class Bot:
         seconds=0,
         minutes=0,
         hours=0,
-        count: int = None,
-        func_count = None,
         args: tuple = ()):
 
         sum_time = seconds + (minutes*60) + (hours*60*60)
@@ -359,8 +359,6 @@ class Bot:
                         self.loops[func.__name__] = self._Timer(
                             sum_time,
                             func,
-                            count=count,
-                            func_count=func_count,
                             args=args)
                         self.loops[func.__name__].start()
                 else:
