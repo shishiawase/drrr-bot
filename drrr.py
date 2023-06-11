@@ -55,17 +55,17 @@ def wJson(name: str, profile: dict):
 
 def get_logger(
 logger_name,
-level = logging.WARNING):
+level=logging.INFO):
 
     log = logging.getLogger(logger_name)
-    log.setLevel(level=logging.DEBUG)
+    log.setLevel(level=level)
 
     formatter = logging.Formatter('%(asctime)s: [%(name)s][%(levelname)s] --- %(message)s')
 
     ch = logging.StreamHandler()
     ch.setFormatter(formatter)
     ch.setLevel(level=level)
-
+    
     log.addHandler(ch)
     return  log
 
@@ -186,7 +186,7 @@ class Bot:
         obj = rJson(name)
 
         if obj:
-            self.logger = get_logger(f'DRRR({obj["name"]})')
+            self.logger.name = f'DRRR({obj["name"]})'
 
             for i in obj:
                 self.profile[i] = obj[i]
@@ -311,8 +311,7 @@ class Bot:
         update = self.lastTime
 
         if update:
-            update = update - 60*1000
-            url += f'?update={update}'
+            url += f'?fast=1&update={update}'
         
         try:
             r = self._get(url)
@@ -327,9 +326,8 @@ class Bot:
 
             self.loc = 'room'
             self.room = room
-            lastTime = (room.get('talks') and room['talks'][-1].get('time')) or 0
+            lastTime = room.get('update') or 0
             
-            if not self.lastTime: self.lastTime = room.get('update') or 0
             if self.lastTime < lastTime:
                 if not self.lastTime:
                     self.lastTime = lastTime
