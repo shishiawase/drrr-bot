@@ -316,7 +316,7 @@ class Bot:
         try:
             r = self._get(url)
             room = r.text or []
-            self.users = room.get('users') or []
+            self.users = room.get('users') or self.users
 
             if room.get('error') and 'Not in room' in room['error']:
                 self.lounge()
