@@ -22,10 +22,9 @@ or just download `drrr.py` from the repository folder
 - ## Use this module:
     Import the module into our `main.py` (or some other name) in further examples, this part will be skipped
     ```python
-    from drrr import Bot, logging
+    from drrr import Bot
     
     drrr = Bot('name', 'icon', 'device')
-    drrr.logger.setLevel(level=logging.WARNING)   # Default set INFO
                                         
     # We determine the main parameters of the bot.
     # If you simply call Bot (), the default parameters
