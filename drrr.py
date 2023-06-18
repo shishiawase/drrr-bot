@@ -269,6 +269,14 @@ class Bot:
             self.profile[i] = profile[i]
     
 
+    def getRoom(self):
+        r = self._get(f'{DRRRUrl}/room/?api=json')
+        if r.status != 200:
+            return self.logger.warning(f"[getRoom]: {r.status} {r.text}")
+
+        return r.text
+    
+
     def _checkMode(self, t, users):
         arr = []
         _users = []
@@ -322,8 +330,10 @@ class Bot:
                 self.lounge()
                 self.loc = 'lounge'
                 return
-               
-
+            
+            if not self.users and (_room := self.getRoom()).get('room'):
+                self.users = _room['room'].get('users') or []
+            
             self.loc = 'room'
             self.room = room
             lastTime = room.get('update') or 0
