@@ -1,6 +1,7 @@
 import os
 import re
 import json
+import time
 import logging
 import requests as req
 import threading
@@ -16,19 +17,24 @@ def request(url, **params):
         status: int
         headers: dict
         text: dict | bool
+    
+    def json_check(res):
+        try:
+            text = res.json()
+        except json.JSONDecodeError:
+            text = False
+        return text
 
-    text = False
     headers = params.get('headers') or None
 
     if 'data' in params:
         data = params['data']
         res = requests.post(url, headers=headers, data=data)
-        if res.text.startswith('{'): text = res.json()
-        return response(res.status_code, res.headers, text)
+
+        return response(res.status_code, res.headers, json_check(res))
 
     res = requests.get(url, headers=headers)
-    if res.text.startswith('{'): text = res.json()
-    return response(res.status_code, res.headers, text)
+    return response(res.status_code, res.headers, json_check(res))
 
 def rJson(name: str):
     if not os.path.isfile(f'./configs/{name}.json'):
@@ -64,8 +70,6 @@ level=logging.INFO):
 
     ch = logging.StreamHandler()
     ch.setFormatter(formatter)
-    ch.setLevel(level=level)
-    
     log.addHandler(ch)
     return  log
 
@@ -153,6 +157,7 @@ class Bot:
 
         t = self._post(f'{DRRRUrl}/?api=json', form)
         while 'drrr' not in t.headers['set-cookie']:
+            time.sleep(1)
             t = self._post(f'{DRRRUrl}/?api=json', form)
         
         cookie = t.headers['set-cookie'].partition(';')[0]
@@ -219,44 +224,26 @@ class Bot:
         return t
     
 
-    def _msgFormat(self, text, me=False):
-        if '/me' in text: 
-            text = text.replace('/me', '')
-            me = True
+    def _splitMessage(self, message):
+        words = message.split()
+        messages = []
+        current_message = ""
 
-        def textSplit(t):
-            arr = []
-            pre = ''
-            splText = t.split()
-            for x in splText:
-                a = pre + ' ' + x
-                if not pre:
-                    if len(splText) == 1: return [x]
-                    pre += x
-                elif len(a) <= 135:
-                    if splText.index(x) == (len(splText) - 1):
-                        arr.append(a)
-                        return arr
-                    pre = a
-                else:
-                    if splText.index(x) == (len(splText) - 1):
-                        arr.append(pre)
-                        arr.append(x)
-                        return arr
-                    arr.append(pre)
-                    pre = x
-    
-        res = textSplit(text)
-        if me:
-            arr = []
-            for x in res:
-                arr.append('/me' + x)
-            res = arr
-            
-        arr = []
-        for x in res:
-            arr.append({ 'message': x })
-        return arr
+        for word in words:
+            if len(current_message) + len(word) + 1 <= 135:
+                current_message += word + " "
+            else:
+                messages.append({"message": current_message.strip()})
+                current_message = word + " "
+        
+        if current_message:
+            messages.append({"message": current_message.strip()})
+        
+        if "/me" in message:
+            for x in messages:
+                x['message'] = "/me" + x['message']
+        
+        return messages
     
 
     def getProfile(self):
@@ -438,10 +425,11 @@ class Bot:
         url = DRRRUrl + '/room/?ajax=1&api=json'
 
         r = self._post(url, cmd)
-        if r.status != 200:
-            
+        while r.status not in {200, 500}:
             self.logger.warning(f"[{list(cmd.keys())[0]}]: {r.status} {r.text}")
-            return r
+            time.sleep(1)
+            r = self._post(url, cmd)
+        
         return r
 
 
@@ -601,7 +589,7 @@ class Bot:
     
 
     def msg(self, msg: str, url: str = ''):
-        msg = self._msgFormat(msg)
+        msg = self._splitMessage(msg)
 
         if url: msg[0]['url'] = url
         for x in msg:
@@ -610,7 +598,7 @@ class Bot:
 
     def dm(self, name: str, msg: str, url: str = ''):
         u = ''
-        msg = self._msgFormat(msg)
+        msg = self._splitMessage(msg)
         
         for x in self.users:
             if x['name'] == name:
